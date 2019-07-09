@@ -4,6 +4,7 @@ const   express = require('express'),
         bodyParser = require('body-parser'),
         cookieParser = require('cookie-parser');
 
+require('./models/db');
 
 const port = process.env.PORT || 3000;
 
