@@ -38,6 +38,8 @@ var userSchema = new mongoose.Schema({
     role:{
        type: String,
     },
+    hash: String,
+    salt: String,
     status: string,
     isLoggedIn:Boolean,
 
@@ -46,7 +48,7 @@ var userSchema = new mongoose.Schema({
 //The {timestamps: true} option creates a createdAt and updatedAt field on our models that contain timestamps
 // which will get automatically updated when our model changes.
 // https://thinkster.io/tutorials/node-json-api/creating-the-user-model
-
+// https://www.geeksforgeeks.org/node-js-password-hashing-crypto-module/
 
 // Apply the uniqueValidator plugin to userSchema.
 userSchema.plugin(uniqueValidator);
