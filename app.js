@@ -17,7 +17,6 @@ app.use(express.static(path.join(__dirname,'assets')));
 //this required before view engine setup
 hbs.registerPartials(path.join(__dirname,'/views/partials')); // include all partials
 
-console.log(path.join(__dirname,'/views/partials'));
 
 // view engine setup
 app.set('views',path.join(__dirname,'views'))// set views directory with path module

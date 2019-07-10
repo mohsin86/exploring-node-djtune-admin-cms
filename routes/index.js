@@ -13,6 +13,7 @@ routers.get('/', function(req, res, next){
     res.render("home");  
  });
 
+
  // routers.get('/login', function(req, res, next){
  //    res.render("login" );
  // });
@@ -20,4 +21,9 @@ routers.get('/', function(req, res, next){
 routers.get('/login', loginController);
 routers.get('/register', registerController);
 
- module.exports = routers;
+routers.get('/404', function(req, res, next){
+    res.render("404");
+});
+
+
+module.exports = routers;
