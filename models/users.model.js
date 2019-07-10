@@ -7,8 +7,8 @@ const ObjectId = new mongoose.Types.ObjectId();
 var userSchema = new mongoose.Schema({
    // _id: ObjectId,
     name:{
-        first: string,
-        last:string
+        first: String,
+        last:String
     },
     username: {
         type:String,
@@ -40,7 +40,7 @@ var userSchema = new mongoose.Schema({
     },
     hash: String,
     salt: String,
-    status: string,
+    status: String,
     isLoggedIn:Boolean,
 
 }, {timestamps: true});
@@ -53,5 +53,5 @@ var userSchema = new mongoose.Schema({
 // Apply the uniqueValidator plugin to userSchema.
 userSchema.plugin(uniqueValidator);
 
-//var User = mongoose.model('User', userSchema);
-//module.exports = User;
+var User = mongoose.model('User', userSchema);
+module.exports = User;
