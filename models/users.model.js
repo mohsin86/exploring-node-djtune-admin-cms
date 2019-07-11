@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
-
 var uniqueValidator = require('mongoose-unique-validator');
+var validator = require('validator');
+
+var rolesSchema = require('./roles.model');
+
+mongoose.set('useCreateIndex', true);
 
 const ObjectId = new mongoose.Types.ObjectId();
 
@@ -24,8 +28,11 @@ var userSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         lowercase: true,
-        match: [/\S+@\S+\.\S+/, 'is invalid'],
-        index: true
+        index: true,
+        validate: (value) => {
+            return validator.isEmail(value)
+        }
+
     },
     address:{
         type:String
@@ -36,12 +43,23 @@ var userSchema = new mongoose.Schema({
       required:true
     },
     role:{
-       type: String,
+        type: Array, default: [ 'member' ]
     },
     hash: String,
     salt: String,
     status: String,
     isLoggedIn:Boolean,
+    privileges:[
+        {
+            role:[rolesSchema],
+            action: {
+                insert:boolean,
+                update:boolean,
+                remove:boolean,
+                view:boolean,
+            }
+
+        }]
 
 }, {timestamps: true});
 
@@ -54,4 +72,8 @@ var userSchema = new mongoose.Schema({
 userSchema.plugin(uniqueValidator);
 
 var User = mongoose.model('User', userSchema);
-module.exports = User;
+
+module.exports = {
+    userSchema,
+    User
+};
