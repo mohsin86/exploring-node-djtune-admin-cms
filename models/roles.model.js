@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 var rolesSchema = new mongoose.Schema({
     // _id: ObjectId,
@@ -12,5 +13,6 @@ var rolesModel = mongoose.model('Roles', rolesSchema);
 
 
 module.exports = {
-    rolesModel
+    rolesModel,
+    rolesSchema
 };

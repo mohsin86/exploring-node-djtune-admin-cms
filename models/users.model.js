@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var validator = require('validator');
 
-var rolesSchema = require('./roles.model');
+var rolesSchema = require('./roles.model').rolesSchema;
 
 mongoose.set('useCreateIndex', true);
 
@@ -53,10 +53,10 @@ var userSchema = new mongoose.Schema({
         {
             role:[rolesSchema],
             action: {
-                insert:boolean,
-                update:boolean,
-                remove:boolean,
-                view:boolean,
+                insert:Boolean,
+                update:Boolean,
+                remove:Boolean,
+                view:Boolean,
             }
 
         }]
