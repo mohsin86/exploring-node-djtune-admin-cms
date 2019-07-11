@@ -5,6 +5,7 @@ var homeController = require('../controllers/homeController');
 var loginController = require('../controllers/loginController');
 //var registerController = require('../controllers/registerController');
 var userController = require('../controllers/userController');
+var rolesController = require('../controllers/rolesController');
 
 
 const script = {
@@ -23,7 +24,12 @@ routers.get('/', homeController);
 routers.get('/user', userController.user);
 
 routers.get('/register', userController.register);
-routers.post('/register', userController.addUser);
+routers.post('/register', userController.addUser); // post method to add user
+
+routers.get('/roles', rolesController.roles);
+routers.get('/addroles', rolesController.addroles);
+routers.post('/roles', rolesController.addRolesTodb); // post method to add user
+
 
 routers.get('/login', loginController);
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+{{> header }}
+
+<div class="app-body">
+    {{> leftMenu }}
+
+    <main class="main">
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item">
+                <a href="#">Admin</a>
+            </li>
+            <li class="breadcrumb-item active">Roles</li>
+            <!-- Breadcrumb Menu-->
+            <li class="breadcrumb-menu d-md-down-none">
+                <div class="btn-group" role="group" aria-label="Button group">
+                    <a class="btn" href="#">
+                        <i class="icon-speech"></i>
+                    </a>
+                    <a class="btn" href="#">
+                        <i class="icon-settings"></i>  Settings</a>
+                </div>
+            </li>
+        </ol>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card mx-4">
+                        <div class="card-body p-4">
+                            <h1>Roles</h1>
+                            <p class="text-muted">Create a user roles</p>
+                            <form action="{{SITE_URL}}/roles" method="post">
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="icon-disc"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control" name="name" type="text" placeholder="Roles Name">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">Status</label>
+                                    <div class="col-md-9 col-form-label">
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="radio1" type="radio" value="1" name="status">
+                                            <label class="form-check-label" for="radio1">Enable</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="radio2" type="radio" value="0" name="status">
+                                            <label class="form-check-label" for="radio2">Disable</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <input class="btn btn-block btn-success" type="submit" value="Submit">
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    {{> aside }}
+
+</div>
+
+{{> footer}}
+
+
+</body>
+</html>

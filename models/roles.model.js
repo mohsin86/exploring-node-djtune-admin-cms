@@ -3,9 +3,12 @@ mongoose.set('useCreateIndex', true);
 
 var rolesSchema = new mongoose.Schema({
     // _id: ObjectId,
-    role:{
+    rolesName:{
         type:String
     },
+    roleStatus:{
+        type:Boolean
+    }
 }, {timestamps: true});
 
 

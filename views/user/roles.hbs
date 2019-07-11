@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head }}
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+{{> header }}
+
+<div class="app-body">
+    {{> leftMenu }}
+
+    <main class="main">
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item">
+                <a href="#">Admin</a>
+            </li>
+            <li class="breadcrumb-item active">Dashboard</li>
+            <!-- Breadcrumb Menu-->
+            <li class="breadcrumb-menu d-md-down-none">
+                <div class="btn-group" role="group" aria-label="Button group">
+                    <a class="btn" href="#">
+                        <i class="icon-speech"></i>
+                    </a>
+                    <a class="btn" href="./">
+                        <i class="icon-graph"></i>  Dashboard</a>
+                    <a class="btn" href="#">
+                        <i class="icon-settings"></i>  Settings</a>
+                </div>
+            </li>
+        </ol>
+
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> User Roles
+                        <a href="{{SITE_URL}}/addroles" class="btn btn-info fl" type="button">Add Roles</a>
+
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-responsive-sm table-bordered">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Role Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Admin</td>
+                                <td>
+                                    <span class="badge badge-success">Active</span>
+                                </td>
+                                <td>Edit/delete</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    {{> aside }}
+
+</div>
+
+{{> footer}}
+
+{{> allExternalScript}}
+
+</body>
+</html>
