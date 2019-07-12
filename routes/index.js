@@ -30,7 +30,7 @@ routers.get('/roles', rolesController.roles);
 routers.get('/addroles', rolesController.addroles);
 routers.get('/editroles/:id', rolesController.addroles);
 routers.post('/roles', rolesController.addRolesTodb); // post method to add user
-routers.delete('/delroles/:rolesId', rolesController.deleteRoles); // post method to add user
+routers.post('/delroles', rolesController.deleteRoles); // post method to add user
 
 
 routers.get('/login', loginController);
