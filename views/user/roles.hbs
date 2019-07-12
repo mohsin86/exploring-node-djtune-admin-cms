@@ -51,14 +51,30 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Admin</td>
-                                <td>
-                                    <span class="badge badge-success">Active</span>
-                                </td>
-                                <td>Edit/delete</td>
-                            </tr>
+
+                            {{#each allRoles}}
+                                <tr>
+                                    <td>1</td>
+                                    <td>{{rolesName}}</td>
+                                    <td>
+
+                                        {{#if rolesStatus}}
+                                            <span class="badge badge-success">Enable</span>
+                                        {{else}}
+                                                <span class="badge badge-success">disable</span>
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-light">Edit </a>
+                                        <form action="{{SITE_URL}}/delroles/" method="delete" style="display: inline-block">
+                                            <input type="hidden" value="{{_id}}" name="rolesId" />
+                                            <input type="submit" value="Delete" class="btn btn-light active" />
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            {{/each}}
+
                             </tbody>
                         </table>
                     </div>

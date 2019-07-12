@@ -38,20 +38,11 @@ var userSchema = new mongoose.Schema({
         type:String
     },
     image: String,
-    password:{
-      type:String,
-      required:true
-    },
-    role:{
-        type: Array, default: [ 'member' ]
-    },
-    hash: String,
-    salt: String,
-    status: String,
     isLoggedIn:Boolean,
+    role:[rolesSchema],
     privileges:[
         {
-            role:[rolesSchema],
+            module: String,
             action: {
                 insert:Boolean,
                 update:Boolean,
@@ -59,7 +50,14 @@ var userSchema = new mongoose.Schema({
                 view:Boolean,
             }
 
-        }]
+        }],
+    password:{
+        type:String,
+        required:true
+    },
+    status: String,
+    hash: String,
+    salt: String,
 
 }, {timestamps: true});
 
