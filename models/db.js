@@ -8,4 +8,6 @@ db.once('open', function() {
     // we're connected!
 });
 
-require('./users.model');
+mongoose.set('useFindAndModify', false);
+
+//require('./users.model');

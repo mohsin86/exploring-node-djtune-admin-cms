@@ -23,8 +23,8 @@ routers.get('/home', homeController);
 routers.get('/', homeController);
 routers.get('/user', userController.user);
 
-routers.get('/register', userController.register);
-routers.post('/register', userController.addUser); // post method to add user
+routers.get('/adduser', userController.userAddPage);
+routers.post('/adduser', userController.addUser); // post method to add user
 
 routers.get('/roles', rolesController.roles);
 routers.get('/addroles', rolesController.addroles);

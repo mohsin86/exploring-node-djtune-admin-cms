@@ -1,7 +1,10 @@
+var validator = require('validator');
+var url = require('url');
 const global = require('./globalController');
 
 const RolesModel = require('../models/roles.model').rolesModel;
 
+// all roles
 var roles = (req, res, next) =>{
         RolesModel.find().sort({ rolesName: 1 }).then(function (allroles) {
             res.render("user/roles",{ SITE_URL:global.SITE_URL, allRoles:allroles } );
@@ -9,12 +12,48 @@ var roles = (req, res, next) =>{
 }
 
 var addRolesTodb = (req, res) =>{
+    console.log(req.params);
     let name = req.body.name;
     let status = req.body.status;
-    if(name && status){
-        saveRolesToDb(name, status);
+    if(req.body._id){
+        if(name && status){
+            RolesModel.findByIdAndUpdate(
+                         req.body._id,
+                        {$set:{rolesName:name,roleStatus:status }},
+                        {new:true},
+                        (err, doc) => {
+                            // Handle any possible database errors
+                            if (err) return res.status(500).send(err);
+                            res.redirect(
+                                url.format({
+                                    pathname:"/roles",
+                                    query: {
+                                        "message": "data Updated successfully",
+                                        "type": "update",
+                                    }
+                                    })
+                                );
+
+                        }
+                       )
+        }
+    }else{
+        if(name && status){
+            saveRolesToDb(name, status);
+        }
+
+        res.redirect(
+            url.format({
+                pathname:"/roles",
+                query: {
+                    "message": "data Inserted successfully",
+                    "type": "insert",
+                }
+            })
+        );
     }
-    res.redirect('roles');
+
+
 }
 
 var AddEditRolesPages = async (req, res, nex) =>{
@@ -40,11 +79,27 @@ var AddEditRolesPages = async (req, res, nex) =>{
 }
 
 var deleteRoles = (req, res, next) =>{
-    let id = req.body;
+    let id = req.body.rolesId;
     console.log(id);
-    let messge = 'Successfully deleted ';
+    RolesModel.remove({ _id: id }, function(err) {
+        if (!err) {
+            res.redirect(
+                url.format({
+                    pathname:"/roles",
+                    query: {
+                        "message": "data deleted successfully",
+                        "type": "delete",
+                    }
+                })
+            );
+        }
+        else {
+            res.status(500).send(err);
+        }
+    });
 
-    res.redirect('roles');
+
+
 }
 
  const saveRolesToDb = async (name, status) => {
@@ -54,7 +109,7 @@ var deleteRoles = (req, res, next) =>{
      console.log(name, status, "data inserted")
 }
   const findAll = async () =>{
-      const result = await RolesModel.find({}).sort({ rolesName: 1 });
+      const result = await RolesModel.find().sort({ rolesName: 1 });
      // console.log(result);
       return result
   }
@@ -64,6 +119,7 @@ module.exports = {
     roles:roles,
     addRolesTodb: addRolesTodb,
     addroles:AddEditRolesPages,
-    deleteRoles:deleteRoles
+    deleteRoles:deleteRoles,
+    allRoles:findAll
 };
 
