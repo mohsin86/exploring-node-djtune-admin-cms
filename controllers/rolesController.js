@@ -17,8 +17,26 @@ var addRolesTodb = (req, res) =>{
     res.redirect('roles');
 }
 
-var registerRolesPages = (req, res, next) =>{
-    res.render("user/addRoles" ,{SITE_URL:global.SITE_URL});
+var AddEditRolesPages = async (req, res, nex) =>{
+    let rolesData = {
+        _id:'',
+        rolesName:'',
+        roleStatus:true,
+    };
+
+    if(req.params.rolesid){
+        let id = req.params.rolesid;
+        console.log(id)
+        RolesModel.findById(id,function (err,doc) {
+            //console.log(doc.rolesName);
+             rolesData._id = doc._id;
+             rolesData.rolesName = doc.rolesName;
+             rolesData.roleStatus = doc.roleStatus;
+             console.log(rolesData);
+            res.render("user/addRoles" ,{SITE_URL:global.SITE_URL, rolesData: rolesData});
+        });
+    }else
+        res.render("user/addRoles" ,{SITE_URL:global.SITE_URL, rolesData: rolesData});
 }
 
 var deleteRoles = (req, res, next) =>{
@@ -45,7 +63,7 @@ var deleteRoles = (req, res, next) =>{
 module.exports = {
     roles:roles,
     addRolesTodb: addRolesTodb,
-    addroles:registerRolesPages,
+    addroles:AddEditRolesPages,
     deleteRoles:deleteRoles
 };
 

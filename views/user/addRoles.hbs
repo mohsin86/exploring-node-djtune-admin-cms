@@ -46,7 +46,7 @@
                                                 <i class="icon-disc"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control" name="name" type="text" placeholder="Roles Name">
+                                        <input class="form-control" name="name" type="text" placeholder="Roles Name" value="{{rolesData.rolesName}}">
                                     </div>
                                 </div>
 
@@ -55,18 +55,22 @@
                                     <label class="col-md-2 col-form-label">Status</label>
                                     <div class="col-md-9 col-form-label">
                                         <div class="form-check">
-                                            <input class="form-check-input" id="radio1" type="radio" value="1" name="status">
+                                            <input {{#if rolesData.roleStatus}} checked="checked" {{/if}}  class="form-check-input" id="radio1" type="radio" value="1" name="status">
                                             <label class="form-check-label" for="radio1">Enable</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" id="radio2" type="radio" value="0" name="status">
+                                            <input {{#unless rolesData.roleStatus}} checked="checked" {{/unless}} class="form-check-input" id="radio2" type="radio" value="0" name="status">
                                             <label class="form-check-label" for="radio2">Disable</label>
                                         </div>
 
                                     </div>
                                 </div>
-
+                                {{# if rolesData._id}}
+                                    <input type="text" value="{{rolesData._id}}">
+                                    <input class="btn btn-block btn-success" type="submit" value="Update">
+                                {{else}}
                                 <input class="btn btn-block btn-success" type="submit" value="Submit">
+                                {{/if}}
                             </form>
 
                         </div>

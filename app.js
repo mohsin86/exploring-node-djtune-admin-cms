@@ -37,6 +37,13 @@ app.use(cookieParser());
 //    res.render("index", { title: 'exploring ....', condition:false, anyArray:[1,2,3] } );  
 // });
 
+// app.get('/home/usesr/:ssname', function(req, res, next){
+//     console.log(req.params)
+//     res.render("home",{SITE_URL: "http://localhost:3000/"} );
+// });
+
+
+
 // for different routes
 app.use('/',routes);
 
