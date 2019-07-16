@@ -39,18 +39,7 @@ var userSchema = new mongoose.Schema({
     },
     image: String,
     isLoggedIn:Boolean,
-    role:[rolesSchema],
-    privileges:[
-        {
-            module: String,
-            action: {
-                insert:Boolean,
-                update:Boolean,
-                remove:Boolean,
-                view:Boolean,
-            }
-
-        }],
+    role:String,
     password:{
         type:String,
         required:true
@@ -69,9 +58,8 @@ var userSchema = new mongoose.Schema({
 // Apply the uniqueValidator plugin to userSchema.
 userSchema.plugin(uniqueValidator);
 
-var User = mongoose.model('User', userSchema);
+var UserModel = mongoose.model('User', userSchema);
 
 module.exports = {
-    userSchema,
-    User
+    UserModel
 };

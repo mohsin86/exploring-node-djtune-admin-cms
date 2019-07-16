@@ -6,7 +6,8 @@ const RolesModel = require('../models/roles.model').rolesModel;
 
 // all roles
 var roles = (req, res, next) =>{
-        RolesModel.find().sort({ rolesName: 1 }).then(function (allroles) {
+        RolesModel.find().then(function (allroles) {
+            console.log(allroles);
             res.render("user/roles",{ SITE_URL:global.SITE_URL, allRoles:allroles } );
         });
 }

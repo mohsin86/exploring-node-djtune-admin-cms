@@ -6,6 +6,17 @@ var rolesSchema = new mongoose.Schema({
     rolesName:{
         type:String
     },
+    privileges:[
+        {
+            module: String,
+            access: {
+                insert:Boolean,
+                update:Boolean,
+                remove:Boolean,
+                view:Boolean,
+            }
+
+        }],
     roleStatus:{
         type:Boolean
     }
