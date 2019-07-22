@@ -10,6 +10,7 @@ var roles = (req, res, next) =>{
             console.log(allroles);
             res.render("user/roles",{ SITE_URL:global.SITE_URL, allRoles:allroles } );
         });
+
 }
 
 var addRolesTodb = (req, res) =>{

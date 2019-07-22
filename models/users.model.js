@@ -39,7 +39,11 @@ var userSchema = new mongoose.Schema({
     },
     image: String,
     isLoggedIn:Boolean,
-    role:String,
+    role:{
+        type: mongoose.Types.ObjectId, // see relation based mongo
+        ref: 'Roles',
+        required:true
+    },
     password:{
         type:String,
         required:true
