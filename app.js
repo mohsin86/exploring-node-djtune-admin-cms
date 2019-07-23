@@ -2,6 +2,7 @@ const   express = require('express'),
         hbs = require('hbs'),
         path = require('path'),
         bodyParser = require('body-parser'),
+        expressValidator = require('express-validator'),
         cookieParser = require('cookie-parser');
 
 require('./models/db');
@@ -42,6 +43,7 @@ app.use(cookieParser());
 //     res.render("home",{SITE_URL: "http://localhost:3000/"} );
 // });
 
+// app.use(expressValidator());
 
 
 // for different routes

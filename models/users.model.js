@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var validator = require('validator');
+var bcrypt = require('bcrypt');
 
 var rolesSchema = require('./roles.model').rolesSchema;
 
@@ -46,13 +47,26 @@ var userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required: [true,  'Password cannot be left blank']
     },
     status: String,
     hash: String,
     salt: String,
 
 }, {timestamps: true});
+
+//hashing a password before saving it to the database
+// userSchema.pre('save', function (next) {
+//     var user = this;
+//     bcrypt.hash(user.password, 10, function (err, hash){
+//         if (err) {
+//             return next(err);
+//         }
+//         user.password = hash;
+//         next();
+//     })
+// });
+
 
 //The {timestamps: true} option creates a createdAt and updatedAt field on our models that contain timestamps
 // which will get automatically updated when our model changes.
