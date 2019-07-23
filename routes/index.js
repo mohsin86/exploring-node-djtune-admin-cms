@@ -19,21 +19,30 @@ const script = {
  //    res.render("login" );
  // });
 
-routers.get('/home', homeController);
-routers.get('/', homeController);
-routers.get('/user', userController.user);
+function isLoggedIn(req, res, next){
+    if (true)
+        return next();
+    else
+        res.redirect('/login')
+}
 
-routers.get('/adduser', userController.userAddPage);
-routers.post('/adduser', userController.addUser); // post method to add user
 
-routers.get('/roles', rolesController.roles);
-routers.get('/addroles', rolesController.addroles);
-routers.get('/roles/addedit/:rolesid', rolesController.addroles);
-routers.post('/roles', rolesController.addRolesTodb); // post method to add user
-routers.post('/delroles', rolesController.deleteRoles); // post method to add user
+routers.get('/home',isLoggedIn, homeController);
+routers.get('/',isLoggedIn, homeController);
+routers.get('/user',isLoggedIn, userController.user);
+
+routers.get('/adduser', isLoggedIn, userController.userAddPage);
+routers.post('/adduser',userController.validate('createUser'), userController.addUser); // post method to add user
+
+routers.get('/roles',isLoggedIn, rolesController.roles);
+routers.get('/addroles', isLoggedIn, rolesController.addroles);
+routers.get('/roles/addedit/:rolesid',isLoggedIn, rolesController.addroles);
+routers.post('/roles',isLoggedIn, rolesController.addRolesTodb); // post method to add user
+routers.post('/delroles',isLoggedIn, rolesController.deleteRoles); // post method to add user
 
 
 routers.get('/login', loginController);
+routers.post('/login', loginController);
 
 
 

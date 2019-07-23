@@ -16,7 +16,7 @@
             <li class="breadcrumb-item">
                 <a href="#">Admin</a>
             </li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item active">User</li>
             <!-- Breadcrumb Menu-->
             <li class="breadcrumb-menu d-md-down-none">
                 <div class="btn-group" role="group" aria-label="Button group">
@@ -49,16 +49,19 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Pompeius René</td>
-                          <td>PompeiusRené</td>
-                          <td>pompeius@rené.com</td>
-                          <td>Member</td>
-                          <td>
-                            <span class="badge badge-success">Active</span>
-                          </td>
-                          <td>Edit/delete</td>
-                        </tr>
+                       {{#each users }}
+                           <tr>
+                               <td>{{name.first}} {{name.last}}</td>
+                               <td>{{username}}</td>
+                               <td>{{email}}</td>
+                               <td>{{role.rolesName}}</td>
+                               <td>
+                                   <span class="badge badge-success">Active</span>
+                               </td>
+                               <td>Edit/delete</td>
+                           </tr>
+                       {{/each}}
+
                       </tbody>
                     </table>
                     <ul class="pagination">
