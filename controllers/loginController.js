@@ -4,8 +4,11 @@ var login = (req, res, next) =>{
     res.render("login",{SITE_URL:global.SITE_URL} );
 }
 
-var loginCheck = (req,res)=>{
+var loginCheck = (req, res) =>{
     console.log(req.body);
 }
 
-module.exports = login;
+
+module.exports = {
+    login, loginCheck
+};

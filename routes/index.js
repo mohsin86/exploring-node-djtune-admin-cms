@@ -20,7 +20,8 @@ const script = {
  // });
 
 function isLoggedIn(req, res, next){
-    if (true)
+    console.log(req.session.user);
+    if (req.session.user)
         return next();
     else
         res.redirect('/login')
@@ -41,8 +42,8 @@ routers.post('/roles',isLoggedIn, rolesController.addRolesTodb); // post method 
 routers.post('/delroles',isLoggedIn, rolesController.deleteRoles); // post method to add user
 
 
-routers.get('/login', loginController);
-routers.post('/login', loginController);
+routers.get('/login', loginController.login);
+routers.post('/login', loginController.loginCheck);
 
 
 

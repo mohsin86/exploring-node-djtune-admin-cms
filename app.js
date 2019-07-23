@@ -3,6 +3,7 @@ const   express = require('express'),
         path = require('path'),
         bodyParser = require('body-parser'),
         expressValidator = require('express-validator'),
+         session = require('express-session'),
         cookieParser = require('cookie-parser');
 
 require('./models/db');
@@ -33,6 +34,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // To use cookies with Express, we need the cookie-parser middleware.
 app.use(cookieParser());
 
+// add & configure middleware
+app.use(session({
+    secret: 'someSecretForThisApp',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: 600000
+    }
+}))
+
 
 // app.get('/', function(req, res){
 //    res.render("index", { title: 'exploring ....', condition:false, anyArray:[1,2,3] } );  
@@ -43,7 +54,7 @@ app.use(cookieParser());
 //     res.render("home",{SITE_URL: "http://localhost:3000/"} );
 // });
 
-// app.use(expressValidator());
+//app.use(expressValidator());
 
 
 // for different routes

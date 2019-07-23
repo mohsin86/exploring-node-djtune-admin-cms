@@ -92,8 +92,9 @@ var validate = (method)=>{
     switch (method) {
         case 'createUser': {
             return [
-                body('userName', "userName doesn't exists").exists(),
-                body('email', 'Invalid email').exists().isEmail(),
+                check('userName', "userName doesn't exists").exists(),
+                check('email', 'Invalid email').exists().isEmail(),
+                check('password').isLength({ min: 5 })
               //  body('phone').optional().isInt(),
                // body('status').optional().isIn(['enabled', 'disabled'])
             ]
@@ -105,5 +106,6 @@ var validate = (method)=>{
 module.exports = {
     user:userList,
     addUser: addUser,
-    userAddPage:userAddPage
+    userAddPage:userAddPage,
+    validate:validate
 };
