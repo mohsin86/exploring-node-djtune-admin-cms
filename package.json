@@ -16,9 +16,11 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "express-validator": "^6.1.1",
-    "hbs": "^4.0.4",
     "mongoose": "^5.6.4",
     "mongoose-unique-validator": "^2.0.3",
     "validator": "^11.1.0"
+  },
+  "devDependencies": {
+    "express-handlebars": "^3.1.0"
   }
 }

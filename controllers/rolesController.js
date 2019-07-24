@@ -99,9 +99,6 @@ var deleteRoles = (req, res, next) =>{
             res.status(500).send(err);
         }
     });
-
-
-
 }
 
  const saveRolesToDb = async (name, status) => {

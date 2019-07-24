@@ -32,12 +32,12 @@
             </li>
         </ol>
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col-md-6">
                     <div class="card mx-4">
                         <div class="card-body p-4">
-                            <h1>Register</h1>
+                            <h1>Add/Edit User</h1>
                             <p class="text-muted">Create a user your account</p>
                             <form action="{{SITE_URL}}/adduser" method="post">
                                 <div class="row">
@@ -49,7 +49,7 @@
                                                                 <i class="icon-user"></i>
                                                             </span>
                                                 </div>
-                                                <input class="form-control" name="firstName" type="text"
+                                                <input class="form-control" name="firstName" value="{{data.user.name.first}}" type="text"
                                                        placeholder="First Name">
                                             </div>
                                         </div>
@@ -62,7 +62,7 @@
                                                             <i class="icon-user"></i>
                                                         </span>
                                                 </div>
-                                                <input class="form-control" name="lastName" type="text"
+                                                <input class="form-control" name="lastName" type="text" value="{{data.user.name.last}}"
                                                        placeholder="Last Name">
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
                                                 <i class="icon-user"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control" name="username" type="text" placeholder="Username">
+                                        <input class="form-control" name="username" type="text" placeholder="Username" value="{{data.user.username}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -84,7 +84,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">@</span>
                                         </div>
-                                        <input class="form-control" name="email" type="text" placeholder="Email">
+                                        <input class="form-control" name="email" type="text" placeholder="Email" value="{{data.user.email}}" >
                                     </div>
                                 </div>
 
