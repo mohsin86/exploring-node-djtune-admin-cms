@@ -61,9 +61,26 @@ var addUser = async (req, res) =>{
         rolesController.allRoles().then((result)=>{
             data.allRoles = result;
             data.user = User;
-            //console.log(data.allRoles);
+            let index = '';
             console.log(err.array());
-            res.render("user/user-add-edit" ,{SITE_URL:global.SITE_URL, data:data,errors:err.array()});
+            // conveting array to object for better controll on view template
+            let errData = err.array().reduce(function(TmpObject, item) {
+                 index  = item.param ;
+              console.log(index+"== ",TmpObject);
+               let IndexIsAvailable = index in TmpObject;
+                if(IndexIsAvailable == false){
+                    TmpObject[index] = item; //a, b, c
+                    return TmpObject;
+                }else
+                    return TmpObject;
+
+            }, {}) //watch out the empty {}, which is passed as "result"
+
+        //    console.log(err.array());
+            res.render("user/user-add-edit" ,{
+                    SITE_URL:global.SITE_URL,
+                    data:data,errors:errData
+                    });
         })
            //res.status(400).json(err);
     }
@@ -78,7 +95,9 @@ var userAddPage = async (req, res, next) =>{
         rolesController.allRoles().then((result)=>{
             data.allRoles = result;
             //console.log(data.allRoles);
-            res.render("user/user-add-edit" ,{SITE_URL:global.SITE_URL, data:data});
+            res.render("user/user-add-edit" ,{
+                SITE_URL:global.SITE_URL, data:data
+            });
         }).catch((err)=>{
             res.status(500).send(err);
         });
@@ -89,8 +108,8 @@ var validate = (method)=>{
     switch (method) {
         case 'createUser': {
             return [
-                check('lastName', "Last Name should not be Empty").exists(),
-                check('username', "userName doesn't exists").exists(),
+                check('lastName').not().isEmpty().withMessage('The Last name is required'),
+                check('username').not().isEmpty().withMessage('User Name is required'),
                 check('rolesId', "roles needs to be selected").exists(),
                 check('email', 'Invalid email').exists().isEmail(),
                 check('password').isLength({ min: 5 })

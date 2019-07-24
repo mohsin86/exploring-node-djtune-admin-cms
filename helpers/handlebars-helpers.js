@@ -1,10 +1,16 @@
+
 var register = function(Handlebars) {
     var helpers = {
         inc: function(value, options) {
             return parseInt(value) + 1;
         },
-        foo: function(var1, var2) {
-            return var1;
+        ifValue: function(var1, var2, options) {
+            if (var1 === var2) {
+                return options.fn(this)
+            } else {
+                return options.inverse(this)
+            }
+
         }
     };
 
@@ -18,5 +24,5 @@ var register = function(Handlebars) {
 
 };
 
-module.exports.registerHelper = register;
+module.exports.register = register;
 module.exports.helpers = register(null);

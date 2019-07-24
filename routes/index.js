@@ -20,7 +20,7 @@ const script = {
  // });
 
 function isLoggedIn(req, res, next){
-    console.log(req.session.user);
+    console.log("User login session from route",req.session.user);
     // if (req.session.user)
     //     return next();
     // else
