@@ -41,10 +41,8 @@ routers.get('/roles/addedit/:rolesid',isLoggedIn, rolesController.addroles);
 routers.post('/roles',isLoggedIn, rolesController.addRolesTodb); // post method to add user
 routers.post('/delroles',isLoggedIn, rolesController.deleteRoles); // post method to add user
 
-
 routers.get('/login', loginController.login);
 routers.post('/login', loginController.loginCheck);
-
 
 
 routers.get('/404', function(req, res, next){
