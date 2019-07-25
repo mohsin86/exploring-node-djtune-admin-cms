@@ -5,9 +5,6 @@ const { check, validationResult } = require('express-validator');
 const UserModel = require('../models/users.model').UserModel;
 const roleModel = require('../models/roles.model').rolesModel;
 
-// https://www.freecodecamp.org/news/how-to-make-input-validation-simple-and-clean-in-your-express-js-app-ea9b5ff5a8a7/
-// https://express-validator.github.io/docs/custom-validators-sanitizers.html
-
 var userList = (req, res, next) =>{
     UserModel.find().
     populate('role').
@@ -32,8 +29,9 @@ var addUser = async (req, res) =>{
     User.name.first = req.body.firstName;
     User.name.last = req.body.lastName;
     User.username = req.body.username;
-    User.password = req.body.password;
+   // User.password = req.body.password;
     User.email = req.body.email;
+    User.setPassword(req.body.password);
 
     try {
         validationResult(req).throw();
@@ -57,16 +55,15 @@ var addUser = async (req, res) =>{
         // yay! we're good to go
 
     } catch (err) {
-        // Oh noes. This user doesn't have enough skills for this...
+        //*** IF ERROR, RETURN ALL THE ROLES AND ERROR OBJECT
         rolesController.allRoles().then((result)=>{
             data.allRoles = result;
             data.user = User;
             let index = '';
-            console.log(err.array());
+
             // conveting array to object for better controll on view template
             let errData = err.array().reduce(function(TmpObject, item) {
                  index  = item.param ;
-              console.log(index+"== ",TmpObject);
                let IndexIsAvailable = index in TmpObject;
                 if(IndexIsAvailable == false){
                     TmpObject[index] = item; //a, b, c
@@ -116,13 +113,14 @@ var validate = (method)=>{
                                     .withMessage('must be at least 5 chars long')
                                     .matches(/\d/).withMessage('must contain a number')
                                     .not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password')
-                                    .matches('confirmPassword')
-                                    .withMessage('Passwords and Confirm Password should be match'),
+                                   // .matches('confirmPassword')
+                                    .custom((value, {req}) => (value === req.body.confirmPassword)).withMessage("Passwords don't match."),
+
                 check('confirmPassword')
                     .isLength({ min: 1 })
                     .withMessage('Confirm password is required.')
-                    .matches('password')
-                    .withMessage('Passwords must match.')
+                    .custom((value, {req}) => (value === req.body.password))
+                    .withMessage('Confirm Passwords must match.')
 
               //  body('phone').optional().isInt(),
                // body('status').optional().isIn(['enabled', 'disabled'])

@@ -21,12 +21,12 @@ const script = {
 
 function isLoggedIn(req, res, next){
     console.log("User login session from route",req.session.user);
-    // if (req.session.user)
-    //     return next();
-    // else
-    //     res.redirect('/login')
+    if (req.session.user)
+        return next();
+    else
+        res.redirect('/login')
 
-    return next();
+    //return next();
 }
 
 
@@ -45,6 +45,7 @@ routers.post('/delroles',isLoggedIn, rolesController.deleteRoles); // post metho
 
 routers.get('/login', loginController.login);
 routers.post('/login', loginController.loginCheck);
+routers.get('/logout', loginController.logout);
 
 
 routers.get('/404', function(req, res, next){

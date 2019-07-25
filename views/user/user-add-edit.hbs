@@ -36,7 +36,7 @@
             <div class="row ">
                 <div class="col-md-6">
                     <div class="card mx-4">
-                        <div class="card-body p-4">
+                        <div class="card-body p-4 ">
                             <h1>Add/Edit User </h1>
                             <p class="text-muted">Create a user your account</p>
                             {{#if errors}}
@@ -58,7 +58,7 @@
                                                             </span>
                                                 </div>
                                                 <input class="form-control" name="firstName" value="{{data.user.name.first}}" type="text"
-                                                       placeholder="First Name">
+                                                       placeholder="First Name" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                                         </span>
                                                 </div>
                                                 <input class="form-control {{#if errors.lastName}} is-invalid {{/if}}" name="lastName" type="text" value="{{data.user.name.last}}"
-                                                       placeholder="Last Name">
+                                                       required  placeholder="Last Name" />
                                                 {{#if errors.lastName}}
                                                     <div class="invalid-feedback">{{errors.lastName.msg}}.</div>
                                                 {{/if}}
@@ -87,7 +87,7 @@
                                                 <i class="icon-user"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control {{#if errors.username}} is-invalid {{/if}}" name="username" type="text" placeholder="Username" value="{{data.user.username}}">
+                                        <input class="form-control {{#if errors.username}} is-invalid {{/if}}" name="username" type="text" placeholder="Username" value="{{data.user.username}}" required />
                                         {{#if errors.username}}  <div class="invalid-feedback">{{errors.username.msg}}.</div>  {{/if}}
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">@</span>
                                         </div>
-                                        <input class="form-control {{#if errors.email}} is-invalid {{/if}}" name="email" type="text" placeholder="Email" value="{{data.user.email}}" >
+                                        <input class="form-control {{#if errors.email}} is-invalid {{/if}}" name="email" type="text" placeholder="Email" value="{{data.user.email}}" required />
                                         {{#if errors.email}} <div class="invalid-feedback">{{errors.email.msg}}.</div>   {{/if}}
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                                 </span>
                                         </div>
                                         <input class="form-control {{#if errors.password}} is-invalid {{/if}}" name="password" type="password"
-                                               placeholder="Password">
+                                               placeholder="Password" required />
                                         {{#if errors.password}} <div class="invalid-feedback">{{errors.password.msg}}.</div>   {{/if}}
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                             </span>
                                         </div>
                                         <input class="form-control {{#if errors.confirmPassword}} is-invalid {{/if}}" name="confirmPassword" type="password"
-                                               placeholder="Repeat password">
+                                               placeholder="Repeat password" required />
                                         {{#if errors.confirmPassword}} <div class="invalid-feedback">{{errors.confirmPassword.msg}}.</div>   {{/if}}
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                         {{#each data.allRoles}}
                                             <div class="form-check checkbox">
                                                 <input class=" form-check-input" name="rolesId" id="{{this._id}}" type="radio"
-                                                       value="{{this._id}}">
+                                                       value="{{this._id}}" />
                                                 <label class="form-check-label" for="check1">{{this.rolesName}}</label>
                                             </div>
                                         {{/each}}
@@ -157,6 +157,7 @@
 
 {{> footer}}
 
+{{> allExternalScript}}
 
 </body>
 </html>

@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var validator = require('validator');
-var bcrypt = require('bcrypt');
+
+//var bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 var rolesSchema = require('./roles.model').rolesSchema;
 
@@ -47,13 +49,26 @@ var userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required: [true,  'Password cannot be left blank']
+       // required: [true,  'Password cannot be left blank']
     },
     status: String,
     hash: String,
     salt: String,
 
 }, {timestamps: true});
+
+
+
+userSchema.methods.setPassword = function(password) {
+    this.salt = crypto.randomBytes(16).toString('hex');
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+};
+
+userSchema.methods.validatePassword = function(password) {
+    const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+    return this.hash === hash;
+
+};
 
 //hashing a password before saving it to the database
 // userSchema.pre('save', function (next) {
