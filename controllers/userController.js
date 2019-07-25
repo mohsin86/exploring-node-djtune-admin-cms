@@ -81,7 +81,6 @@ var addUser = async (req, res) =>{
         })
            //res.status(400).json(err);
     }
-
 }
 
 var userAddPage = async (req, res, next) =>{
@@ -128,7 +127,6 @@ var validate = (method)=>{
         }
     }
 }
-
 
 module.exports = {
     user:userList,

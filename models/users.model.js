@@ -38,7 +38,8 @@ var userSchema = new mongoose.Schema({
 
     },
     address:{
-        type:String
+        type:String,
+        trim: true
     },
     image: String,
     isLoggedIn:Boolean,
@@ -47,11 +48,8 @@ var userSchema = new mongoose.Schema({
         ref: 'Roles',
         required:true
     },
-    password:{
-        type:String,
-       // required: [true,  'Password cannot be left blank']
-    },
-    status: String,
+    gender:{type:String},
+    status: { type: String, default: "enable"},
     hash: String,
     salt: String,
 
