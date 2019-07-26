@@ -39,7 +39,6 @@ var addUser = async (req, res) =>{
             User.role = result;
             return User;
         }).then((User)=>{
-            console.log(User);
             User.save((errr,doc)=>{
                 if(errr){
                     console.log('user error',errr);

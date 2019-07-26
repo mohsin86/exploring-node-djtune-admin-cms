@@ -35,8 +35,8 @@ var userSchema = new mongoose.Schema({
         validate: (value) => {
             return validator.isEmail(value)
         }
-
     },
+    mobile:{type:String},
     address:{
         type:String,
         trim: true
@@ -69,15 +69,17 @@ userSchema.methods.validatePassword = function(password) {
 };
 
 //hashing a password before saving it to the database
-// userSchema.pre('save', function (next) {
+// userSchema.pre('save', async function () {
 //     var user = this;
-//     bcrypt.hash(user.password, 10, function (err, hash){
-//         if (err) {
-//             return next(err);
-//         }
-//         user.password = hash;
-//         next();
-//     })
+// Here I check if the document is new and then user bcrypt to has the password
+// if (this.isNew) {
+//     try {
+//         const hash = await bcrypt.hash(this.password, 10);
+//         this.password = hash;
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
 // });
 
 

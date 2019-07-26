@@ -9,6 +9,13 @@ var login = (req, res, next) =>{
     res.render("login",{SITE_URL:global.SITE_URL} );
 }
 
+var UserInfo = function (user) {
+    this.name = user.name.first+' '+ user.name.last;
+    this.username = user.username;
+    this.email = user.email;
+    this.mobile = user.mobile;
+}
+
 var loginCheck = (req, res) =>{
     const userName = req.body.username.toLowerCase();
     const password = req.body.password;
@@ -20,6 +27,7 @@ var loginCheck = (req, res) =>{
         if(!loginUser.validatePassword(password)){
             throw new Error('password mis matched');
         }else{
+            let loginUser = new UserInfo(userData); // Object Constructors
             session = req.session;
             session.user = userData;
             return res.redirect('/');
