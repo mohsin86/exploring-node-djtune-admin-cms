@@ -16,6 +16,12 @@ var UserInfo = function (user) {
     this.mobile = user.mobile;
 }
 
+/*
+ * @ redirect if login successful
+ * @ set User Info to session
+ *
+ */
+
 var loginCheck = async (req, res) =>{
     const userName = req.body.username.toLowerCase();
     const password = req.body.password;
