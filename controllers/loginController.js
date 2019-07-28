@@ -1,6 +1,6 @@
 const global = require('./globalController');
 const crypto = require('crypto');
-
+const { check, validationResult } = require('express-validator');
 const UserModel = require('../models/users.model').UserModel;
 // https://medium.com/quick-code/handling-authentication-and-authorization-with-node-7f9548fedde8
 var session;
@@ -16,33 +16,38 @@ var UserInfo = function (user) {
     this.mobile = user.mobile;
 }
 
-var loginCheck = (req, res) =>{
+var loginCheck = async (req, res) =>{
     const userName = req.body.username.toLowerCase();
     const password = req.body.password;
-
-    UserModel.findOne(
-            {$or:[{username: userName},{email: userName}]},
-            (err,userData)=>{
-        console.log("final user =",err);
-        try{
-            if(err != null){
-                let loginUser = new UserModel(userData);
-                if(!loginUser.validatePassword(password) ){
-                    throw new Error('password mis matched');
-                }else{
-                    let loginUser = new UserInfo(userData);
-                    session = req.session;
-                    session.user = userData;
-                    return res.redirect('/');
-                }
+    try{
+        validationResult(req).throw();
+        let userData = await UserModel.findOne({$or:[{username: userName},{email: userName}]});
+        console.log('err data',userData);
+        if(userData != null){
+            let loginUser = new UserModel(userData);
+            if(!loginUser.validatePassword(password) ){
+                throw new Error('password mis matched');
             }else{
-                throw new Error('User Name and password is wrong, try again');
+                let loginUser = new UserInfo(userData);
+                session = req.session;
+                session.user = userData;
+                return res.redirect('/');
             }
-        }catch (e) {
-            console.log('err',e);
-            res.status(500).send(e);
+        }else{
+            throw new Error('User Name and password is wrong, try again');
         }
-    });
+    }catch(e) {
+        if(Object.keys(e).length>0){
+            let msgArray = e.array();
+            console.log(msgArray);
+            msg = msgArray[0].msg;
+        }else{
+            msg = e;
+        }
+        res.render("login",{SITE_URL:global.SITE_URL,error:true,msg:msg,userName:userName} );
+    }
+
+
 }
 
 var logout = (req,res)=>{
@@ -54,6 +59,18 @@ var logout = (req,res)=>{
     });
 }
 
+var validate = (method)=>{
+    switch (method) {
+        case 'loginValidate': {
+            return [
+                check('username').not().isEmpty().withMessage('User Name is required'),
+                check('password').not().isEmpty().withMessage('Password is required')
+
+            ]
+        }
+    }
+}
+
 module.exports = {
-    login, loginCheck,logout
+    login, loginCheck,logout,validate:validate
 };

@@ -44,7 +44,7 @@ routers.post('/roles',isLoggedIn, rolesController.addRolesTodb); // post method 
 routers.post('/delroles',isLoggedIn, rolesController.deleteRoles); // post method to add user
 
 routers.get('/login', loginController.login);
-routers.post('/login', loginController.loginCheck);
+routers.post('/login',loginController.validate('loginValidate'), loginController.loginCheck);
 routers.get('/logout', loginController.logout);
 
 
