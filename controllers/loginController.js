@@ -22,7 +22,6 @@ var loginCheck = async (req, res) =>{
     try{
         validationResult(req).throw();
         let userData = await UserModel.findOne({$or:[{username: userName},{email: userName}]});
-        console.log('err data',userData);
         if(userData != null){
             let loginUser = new UserModel(userData);
             if(!loginUser.validatePassword(password) ){
@@ -46,8 +45,6 @@ var loginCheck = async (req, res) =>{
         }
         res.render("login",{SITE_URL:global.SITE_URL,error:true,msg:msg,userName:userName} );
     }
-
-
 }
 
 var logout = (req,res)=>{
