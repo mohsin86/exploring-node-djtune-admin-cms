@@ -20,28 +20,29 @@ var loginCheck = (req, res) =>{
     const userName = req.body.username.toLowerCase();
     const password = req.body.password;
 
-    //return this.hash === hash;
-    UserModel.findOne({$or:[{username: userName},{email: userName}]}).then((userData) =>{
-        const loginUser = new UserModel(userData);
-       // console.log("final user =",finalUser);
-        if(!loginUser.validatePassword(password)){
-            throw new Error('password mis matched');
-        }else{
-            let loginUser = new UserInfo(userData); // Object Constructors
-            session = req.session;
-            session.user = userData;
-            return res.redirect('/');
+    UserModel.findOne(
+            {$or:[{username: userName},{email: userName}]},
+            (err,userData)=>{
+        console.log("final user =",err);
+        try{
+            if(err != null){
+                let loginUser = new UserModel(userData);
+                if(!loginUser.validatePassword(password) ){
+                    throw new Error('password mis matched');
+                }else{
+                    let loginUser = new UserInfo(userData);
+                    session = req.session;
+                    session.user = userData;
+                    return res.redirect('/');
+                }
+            }else{
+                throw new Error('User Name and password is wrong, try again');
+            }
+        }catch (e) {
+            console.log('err',e);
+            res.status(500).send(e);
         }
-      //  const hash = crypto.pbkdf2Sync(password, userData.salt, 10000, 512, 'sha512').toString('hex');
-        //console.log(user.salt);
-        // if(userData.hash ===hash){
-        //     throw new Error('password mis matched');
-        // }
-
-    }).catch(err =>{
-        console.log(err);
     });
-
 }
 
 var logout = (req,res)=>{
