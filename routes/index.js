@@ -15,6 +15,7 @@ const script = {
 
 }
 
+
 // routers.get('/', function(req, res, next){
 //     res.render("home");  
 //  });
@@ -24,7 +25,8 @@ const script = {
 
 function isLoggedIn(req, res, next){
     //console.log("User login session from route",req.session.user);
-    if (req.session.user)
+    const skip_login = process.env.SKIP_LOGIN || 'false';
+    if (req.session.user || skip_login ==='true')
         return next();
     else
         res.redirect('/login')

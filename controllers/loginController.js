@@ -5,7 +5,6 @@ const UserModel = require('../models/users.model').UserModel;
 var session;
 
 var login = (req, res) =>{
-    console.log(req.session.user);
     if (req.session.user)
         res.redirect('/');
     else
