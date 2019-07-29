@@ -14,9 +14,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const port = process.env.PORT || 8000;
 
-const skip_login = process.env.SKIP_LOGIN || 'false';
-console.log('skip login',process.env.SKIP_LOGIN);
-
 const app = express();
 
 var routes = require('./routes/index');
