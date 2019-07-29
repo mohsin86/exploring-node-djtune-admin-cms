@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head }}
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+{{> header }}
+
+<div class="app-body">
+    {{> leftMenu }}
+
+    <main class="main">
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item">
+                <a href="#">Admin</a>
+            </li>
+            <li class="breadcrumb-item active">Profile</li>
+            <!-- Breadcrumb Menu-->
+            <li class="breadcrumb-menu d-md-down-none">
+                <div class="btn-group" role="group" aria-label="Button group">
+                    <a class="btn" href="#">
+                        <i class="icon-speech"></i>
+                    </a>
+                    <a class="btn" href="./">
+                        <i class="icon-graph"></i>  Dashboard</a>
+                    <a class="btn" href="{{SITE_URL}}/settings">
+                        <i class="icon-settings"></i>  Settings</a>
+                </div>
+            </li>
+        </ol>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> User Profile
+                            <div class="card-header-actions">
+                                <a class="card-header-action btn-setting" href="{{SITE_URL}}/edit-user-profile">
+                                    <i class="fa fa-edit fa-lg"></i>
+                                </a>
+                                <a class="card-header-action btn-close" href="{{SITE_URL}}/changepassword">
+                                    <i class="fa fa-lock fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">Name: {{data.logInuserInfo.name}}</li>
+                                <li class="list-group-item">User Name: {{data.logInuserInfo.username}}</li>
+                                <li class="list-group-item">Email: {{data.logInuserInfo.email}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    {{> aside }}
+
+</div>
+
+{{> footer}}
+
+{{> allExternalScript}}
+
+</body>
+</html>
