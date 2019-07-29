@@ -68,7 +68,6 @@ var validate = (method)=>{
             return [
                 check('username').not().isEmpty().withMessage('User Name is required'),
                 check('password').not().isEmpty().withMessage('Password is required')
-
             ]
         }
     }
