@@ -1,10 +1,10 @@
-const global = require('./globalController');
+const common = require('./commonController');
 const rolesController = require('./rolesController');
 const { check, validationResult } = require('express-validator');
 
 const UserModel = require('../models/users.model').UserModel;
 const roleModel = require('../models/roles.model').rolesModel;
-
+var data = {};
 var userList = (req, res, next) =>{
     UserModel.find().
     populate('role').
@@ -13,9 +13,9 @@ var userList = (req, res, next) =>{
             console.log(err);
             res.send(500).send(err);
         }else{
-            console.log(all);
+          //  console.log(all);
            // res.send(200).send(all);
-            res.render("user/user",{ SITE_URL:global.SITE_URL, users:all } );
+            res.render("user/user",{ SITE_URL:common.SITE_URL, users:all } );
         }
     });
 }
@@ -74,7 +74,7 @@ var addUser = async (req, res) =>{
 
         //    console.log(err.array());
             res.render("user/user-add-edit" ,{
-                    SITE_URL:global.SITE_URL,
+                    SITE_URL:common.SITE_URL,
                     data:data,errors:errData
                     });
         })
@@ -91,12 +91,18 @@ var userAddPage = async (req, res, next) =>{
             data.allRoles = result;
             //console.log(data.allRoles);
             res.render("user/user-add-edit" ,{
-                SITE_URL:global.SITE_URL, data:data
+                SITE_URL:common.SITE_URL, data:data
             });
         }).catch((err)=>{
             res.status(500).send(err);
         });
     }
+}
+profileView =   async (req,res,next)=>{
+    session = req.session;
+    data.logInuserInfo = session.user;
+    console.log(data);
+    res.render('user/profile',{data:data});
 }
 
 var validate = (method)=>{
@@ -131,5 +137,6 @@ module.exports = {
     user:userList,
     addUser: addUser,
     userAddPage:userAddPage,
-    validate:validate
+    validate:validate,
+    profileView:profileView
 };

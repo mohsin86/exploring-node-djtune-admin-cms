@@ -1,16 +1,15 @@
 var validator = require('validator');
 var url = require('url');
-const global = require('./globalController');
+const common = require('./commonController');
 
 const RolesModel = require('../models/roles.model').rolesModel;
 
 // all roles
 var roles = (req, res, next) =>{
-        RolesModel.find().then(function (allroles) {
-            console.log(allroles);
-            res.render("user/roles",{ SITE_URL:global.SITE_URL, allRoles:allroles } );
-        });
-
+    RolesModel.find().then(function (allroles) {
+        console.log(allroles);
+        res.render("user/roles",{ SITE_URL:common.SITE_URL, allRoles:allroles } );
+    });
 }
 
 var addRolesTodb = (req, res) =>{
@@ -74,10 +73,10 @@ var AddEditRolesPages = async (req, res, nex) =>{
              rolesData.rolesName = doc.rolesName;
              rolesData.roleStatus = doc.roleStatus;
              console.log(rolesData);
-            res.render("user/addRoles" ,{SITE_URL:global.SITE_URL, rolesData: rolesData});
+            res.render("user/addRoles" ,{SITE_URL:common.SITE_URL, rolesData: rolesData});
         });
     }else
-        res.render("user/addRoles" ,{SITE_URL:global.SITE_URL, rolesData: rolesData});
+        res.render("user/addRoles" ,{SITE_URL:common.SITE_URL, rolesData: rolesData});
 }
 
 var deleteRoles = (req, res, next) =>{

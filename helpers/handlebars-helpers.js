@@ -1,4 +1,5 @@
-
+let sitPort = process.env.PORT || 8000;
+const SITE_URL= "http://localhost:"+sitPort;
 var register = function(Handlebars) {
     var helpers = {
         inc: function(value, options) {
@@ -11,7 +12,8 @@ var register = function(Handlebars) {
                 return options.inverse(this)
             }
 
-        }
+        },
+        SITE_URL: SITE_URL,
     };
 
     if (Handlebars && typeof Handlebars.registerHelper === "function") {

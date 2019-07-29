@@ -12,7 +12,7 @@ require('./models/db');
 //**** Configure isProduction variable, checking is it production or development
 const isProduction = process.env.NODE_ENV === 'production';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
 const app = express();
 
@@ -50,7 +50,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 600000
+         expires: new Date(Date.now() + (60 * 1000 * 60 * 60 * 3)) , // 60minutes  // expires means when the session gonna expire
+      //  maxAge  : new Date(Date.now() + (60 * 1000 * 60 * 3)) //  maxAge means how long the session lasts // set for 3 hour
     }
 }));
 

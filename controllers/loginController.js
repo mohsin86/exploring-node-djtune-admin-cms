@@ -1,12 +1,16 @@
-const global = require('./globalController');
 const crypto = require('crypto');
 const { check, validationResult } = require('express-validator');
 const UserModel = require('../models/users.model').UserModel;
 // https://medium.com/quick-code/handling-authentication-and-authorization-with-node-7f9548fedde8
 var session;
 
-var login = (req, res, next) =>{
-    res.render("login",{SITE_URL:global.SITE_URL} );
+var login = (req, res) =>{
+    console.log(req.session.user);
+    if (req.session.user)
+        res.redirect('/');
+    else
+        res.render("login" );
+
 }
 
 var UserInfo = function (user) {
@@ -30,12 +34,12 @@ var loginCheck = async (req, res) =>{
         let userData = await UserModel.findOne({$or:[{username: userName},{email: userName}]});
         if(userData != null){
             let loginUser = new UserModel(userData);
-            if(!loginUser.validatePassword(password) ){
+            if(!loginUser.validatePassword(password)){
                 throw new Error('password mis matched');
             }else{
                 let loginUser = new UserInfo(userData);
                 session = req.session;
-                session.user = userData;
+                session.user = loginUser;
                 return res.redirect('/');
             }
         }else{
@@ -44,12 +48,11 @@ var loginCheck = async (req, res) =>{
     }catch(e) {
         if(Object.keys(e).length>0){
             let msgArray = e.array();
-            console.log(msgArray);
             msg = msgArray[0].msg;
         }else{
             msg = e;
         }
-        res.render("login",{SITE_URL:global.SITE_URL,error:true,msg:msg,userName:userName} );
+        res.render("login",{error:true,msg:msg,userName:userName} );
     }
 }
 
