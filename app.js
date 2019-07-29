@@ -4,10 +4,10 @@ const   express = require('express'),
         bodyParser = require('body-parser'),
         expressValidator = require('express-validator'),
         session = require('express-session'),
-        cookieParser = require('cookie-parser');
+        cookieParser = require('cookie-parser'),
+        cors = require('cors');
 
 require('./models/db');
-
 
 //**** Configure isProduction variable, checking is it production or development
 const isProduction = process.env.NODE_ENV === 'production';
@@ -16,12 +16,14 @@ const port = process.env.PORT || 8000;
 
 const app = express();
 
+//*** cors support
+app.use(cors());
+
 var routes = require('./routes/index');
 //*** https://www.youtube.com/watch?v=1srD3Mdvf50
 
 //*** for using static file
 app.use(express.static(path.join(__dirname,'assets')));
-
 
 /******* Template view engine setup  ************/
 app.set('views',path.join(__dirname,'views')) // set views directory with path module
