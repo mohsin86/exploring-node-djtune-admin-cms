@@ -5,7 +5,8 @@ const   express = require('express'),
         expressValidator = require('express-validator'),
         session = require('express-session'),
         cookieParser = require('cookie-parser'),
-        cors = require('cors');
+        cors = require('cors'),
+        fileUpload = require('express-fileupload');
 
 require('./models/db');
 
@@ -36,6 +37,9 @@ app.engine('.hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 //********   End view engine sttup *********//
+
+//**  option for file upload
+app.use(fileUpload());
 
 //**** support parsing of application/json type post data
 app.use(bodyParser.json());

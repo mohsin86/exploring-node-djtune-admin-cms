@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+{{> header }}
+
+<div class="app-body">
+    {{> leftMenu }}
+
+    <main class="main">
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item">
+                <a href="#">Admin</a>
+            </li>
+            <li class="breadcrumb-item active">Create Djs</li>
+            <!-- Breadcrumb Menu-->
+            <li class="breadcrumb-menu d-md-down-none">
+                <div class="btn-group" role="group" aria-label="Button group">
+                    <a class="btn" href="#">
+                        <i class="icon-speech"></i>
+                    </a>
+                    <a class="btn" href="../">
+                        <i class="icon-graph"></i>  Dashboard</a>
+                    <a class="btn" href="#">
+                        <i class="icon-settings"></i>  Settings</a>
+                </div>
+            </li>
+        </ol>
+
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col-md-6">
+                    <div class="card mx-4">
+                        <div class="card-body p-4 ">
+                            <h1>Add/Edit Djs </h1>
+                            <p class="text-muted">Create Djs</p>
+                            {{#if errors}}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Need to fix following error.</strong>
+                                    <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            {{/if}}
+                            <form action="{{SITE_URL}}/creat-djs" method="post" enctype="multipart/form-data" >
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="icon-user"></i>
+                                                            </span>
+                                                </div>
+                                                <input class="form-control {{#if errors.name}} is-invalid {{/if}}" name="name" value="{{data.djs.name}}" type="text"
+                                                       placeholder="Name" />
+                                                {{#if errors.name}}
+                                                    <div class="invalid-feedback">{{errors.name.msg}}.</div>
+                                                {{/if}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon-user"></i>
+                                                        </span>
+                                                </div>
+                                                <input class="form-control" name="designation" type="text" value="{{data.djs.designation}}"
+                                                         placeholder="Designation" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="shortBio">Short Bio</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" id="shortBio" name="shortBio" rows="2" placeholder="Short Bio">{{data.djs.shortBio}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="longBio">Long Bio</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" id="longBio" name="longBio" rows="3" placeholder="Short Bio">{{data.djs.longBio}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-facebook fa-lg"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control" name="fblink" type="text" placeholder="facebook link" value="{{data.djs.fblink}}"  />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-youtube"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control" name="youtubeLink" type="text" placeholder="Youtube link" value="{{data.djs.youtubelink}}"  />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-heart fa-lg"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control" name="featuredVideoLink" type="text" placeholder="Featured Video link" value="{{data.djs.featuredVideoLink}}"  />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Featured Djs</label>
+                                    <div class="col-md-9 col-form-label">
+                                        <div class="form-check form-check-inline mr-1">
+                                            <input class="form-check-input" id="inline-checkbox1" type="checkbox" value="check1">
+                                            <label class="form-check-label" for="inline-checkbox1">Featured</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="image">Image</label>
+                                    <div class="col-md-9 ">
+                                        <input class="" id="file-input" type="file" accept="image/*" name="photo">
+                                        {{#if errors.photo}}
+                                            <div class="error" style="color: darkred">{{errors.photo.msg}}.</div>
+                                        {{/if}}
+                                    </div>
+
+
+                                </div>
+                                <input class="btn btn-block btn-success" type="submit" value="Create Artist">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {{> aside }}
+
+</div>
+
+{{> footer}}
+
+{{> allExternalScript}}
+
+</body>
+</html>

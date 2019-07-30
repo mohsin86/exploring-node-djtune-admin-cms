@@ -63,6 +63,8 @@ var addUser = async (req, res) =>{
             // conveting array to object for better controll on view template
             let errData = err.array().reduce(function(TmpObject, item) {
                  index  = item.param ;
+
+                 // if multiple error has with the same name, take the first , rest are skip
                let IndexIsAvailable = index in TmpObject;
                 if(IndexIsAvailable == false){
                     TmpObject[index] = item; //a, b, c

@@ -13,7 +13,7 @@ var roles = (req, res, next) =>{
 }
 
 var addRolesTodb = (req, res) =>{
-    console.log(req.params);
+     //console.log(req.params);
     let name = req.body.name;
     let status = req.body.status;
     if(req.body._id){

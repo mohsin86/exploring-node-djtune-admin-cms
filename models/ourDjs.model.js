@@ -6,13 +6,13 @@ var djsSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    shortDesc:{
+    shortBio:{
         type:String
     },
-    longDesc:{
+    longBio:{
        type:String
     },
-    image:{
+    photo:{
         type:String,
     },
     social:[
