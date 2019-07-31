@@ -4,4 +4,5 @@
 #nodel.js
 node_modules/
 
+#upload Directory
 /assets/uploads/

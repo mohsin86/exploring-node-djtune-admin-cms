@@ -45,7 +45,6 @@ routers.get('/user',isLoggedIn, userController.user);
 routers.get('/adduser', isLoggedIn, userController.userAddPage);
 routers.post('/adduser',userController.validate('createUser'), userController.addUser); // post method to add user
 
-
 routers.get('/roles',isLoggedIn, rolesController.roles);
 routers.get('/addroles', isLoggedIn, rolesController.addroles);
 routers.get('/roles/addedit/:rolesid',isLoggedIn, rolesController.addroles);
@@ -53,6 +52,7 @@ routers.post('/roles',isLoggedIn, rolesController.addRolesTodb); // post method 
 routers.post('/delroles',isLoggedIn, rolesController.deleteRoles); // post method to add user
 
 routers.get('/modules',isLoggedIn, modulesController);
+
 
 /*
  * Autenticaiton
@@ -69,7 +69,8 @@ routers.get('/settings',isLoggedIn, settingsController);
  */
 routers.get('/our-djs',isLoggedIn, ourDjsController.index);
 routers.get('/add-djs',isLoggedIn, ourDjsController.djsAddPage);
-routers.post('/creat-djs',ourDjsController.validate('validateReques'), ourDjsController.create);
+routers.post('/creat-djs',[ourDjsController.validate('validateReques')], ourDjsController.create);
+//routers.post('/creat-djs', ourDjsController.create);
 
 //The 404 Route (ALWAYS Keep this as the last route)
 routers.get('*', function(req, res, next){

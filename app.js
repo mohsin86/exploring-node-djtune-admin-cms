@@ -38,8 +38,16 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 //********   End view engine sttup *********//
 
+// for using root path as appRoot, this needed to upload image to assets path, Node has a a global namespace object called global — anything that you attach to this object will be available everywhere in your app.
+global.appRoot = path.resolve(__dirname);
+global.upLoadDir = path.join(__dirname,'assets/uploads');
+global.homeUrl = 'http://localhost:'+port;
+
 //**  option for file upload
-app.use(fileUpload());
+app.use(fileUpload({
+    // configure middleware to create parent directories
+    createParentPath: true
+}));
 
 //**** support parsing of application/json type post data
 app.use(bodyParser.json());

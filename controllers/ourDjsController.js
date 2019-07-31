@@ -1,6 +1,7 @@
 const common = require('./commonController');
 const { check, validationResult } = require('express-validator');
 const djsModule = require('../models/ourDjs.model').djsModel;
+const path = require('path');
 
 var data = {};
 
@@ -27,29 +28,36 @@ createArtist = async (req,res)=>{
     djs.status = req.body.status;
 
     try {
-        validationResult(req).throw();
-        let djsPhoto = req.files.photo;
-        let filePath = path.join(__dirname,'assets')+'/djs-image/'.djsPhoto ;
-        console.log('file path=',filePath)
-        let isFileUpload = await djsPhoto.mv(filePath);
-        if(isFileUpload){
+       validationResult(req).throw();
+        console.log(req.files);
+        if(req.files){
+            let djsPhoto = req.files.photo;
+            let photoName = djsPhoto.name;
+            let UploadfilePath = upLoadDir+'/djs/'+photoName ;
+            let filePath = '/uploads/djs/'+photoName ;
 
-        }
-        if(req.body._id){
+            //
+            let isFileUpload = await djsPhoto.mv(UploadfilePath);
+            console.log('file ',isFileUpload);
+            if(isFileUpload){
 
+            }
+            if(req.body._id){
+
+            }
         }
+
 
         res.send(req.body);
 
     }catch (e) {
         data.djs = djs;
-        // conveting array to object for better controll on view template
+        //conveting array to object for better controll on view template
         let errData = e.array().reduce(function(TmpObject, item) {
             index  = item.param ;
             TmpObject[index] = item;
             return TmpObject;
         }, {}) //watch out the empty {}, which is passed as "result"
-        console.log(errData);
         res.render("ourDjs/djs-add-page",{data:data,errors:errData} );
     }
 
@@ -62,7 +70,16 @@ var validate = (method)=>{
         case 'validateReques': {
             return [
                 check('name').not().isEmpty().withMessage('Name is required'),
-                check('photo').not().isEmpty().withMessage('Photo is required'),
+                //check('photo').not().isEmpty().withMessage('Photo is required'),
+                check('photo')
+                .custom((value, {req}) => {
+                    //console.log(`req body ${req.body}`);
+                   // console.log('req body', req.files);
+                    if(req.files){
+                        return true;
+                    }else
+                        return false;
+                }).withMessage('Photo is required')
             ]
         }
     }
