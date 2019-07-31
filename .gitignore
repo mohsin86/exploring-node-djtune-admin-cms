@@ -4,4 +4,4 @@
 #nodel.js
 node_modules/
 
-assets/uploads/*
+/assets/uploads/
