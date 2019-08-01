@@ -5,10 +5,14 @@ const path = require('path');
 
 var data = {};
 
-var index = (req, res, next) =>{
+var index = async (req, res, next) =>{
     session = req.session;
     data.logInuserInfo = session.user;
-    res.render("ourDjs/djList",{data:data} );
+    data.djLists = await djsModule.find();
+    console.log(data.djLists);
+    if(data.djLists){
+        res.render("ourDjs/djList",{data:data} );
+    }
 }
 
 djsAddPage = (req, res, next) =>{
@@ -18,7 +22,7 @@ djsAddPage = (req, res, next) =>{
 }
 
 createArtist = async (req,res)=>{
-
+    let Social ={};
     let djs = new djsModule();
     djs.name = req.body.name;
     djs.designation = req.body.designation;
@@ -26,30 +30,45 @@ createArtist = async (req,res)=>{
     djs.longBio = req.body.longBio;
     djs.featuredDj = req.body.featuredDj;
     djs.status = req.body.status;
+    let fblink = req.body.fblink;
+    let featuredVideoLink = req.body.featuredVideoLink;
+    let youtubeLink = req.body.youtubeLink;
+    Social.name='fblink';
+    Social.link= fblink;
+    djs.social.push(Social);
+
+    Social.name='featuredVideoLink';
+    Social.link= featuredVideoLink;
+    djs.social.push(Social);
+
+    Social.name='youtubeLink';
+    Social.link= youtubeLink;
+
+    djs.social.push(Social);
+
+    console.log(djs);
 
     try {
        validationResult(req).throw();
-        console.log(req.files);
+      //  console.log(req.files);
         if(req.files){
             let djsPhoto = req.files.photo;
             let photoName = djsPhoto.name;
             let UploadfilePath = upLoadDir+'/djs/'+photoName ;
             let filePath = '/uploads/djs/'+photoName ;
-
+            djs.photo = filePath ;
             //
-            let isFileUpload = await djsPhoto.mv(UploadfilePath);
-            console.log('file ',isFileUpload);
-            if(isFileUpload){
+           djsPhoto.mv(UploadfilePath,(err)=>{
+               if(err){
+                   if (err) return console.error(err);
+               }
 
-            }
-            if(req.body._id){
-
-            }
+               djs.save((err,data)=>{
+                   if (err) return console.error(err);
+                    res.redirect('/our-djs');
+               })
+            });
         }
-
-
-        res.send(req.body);
-
     }catch (e) {
         data.djs = djs;
         //conveting array to object for better controll on view template
