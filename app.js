@@ -6,7 +6,9 @@ const   express = require('express'),
         session = require('express-session'),
         cookieParser = require('cookie-parser'),
         cors = require('cors'),
-        fileUpload = require('express-fileupload');
+        fileUpload = require('express-fileupload'),
+        http = require('http'),
+        socket = require('socket.io');
 
 require('./models/db');
 
@@ -17,10 +19,14 @@ const port = process.env.PORT || 8000;
 
 const app = express();
 
+//**** confugure app to use https as server //initialize a new instance of socket.io by passing the http
+const server = http.createServer(app);
+
 //*** cors support
 app.use(cors());
 
 var routes = require('./routes/index');
+
 //*** https://www.youtube.com/watch?v=1srD3Mdvf50
 
 //*** for using static file
@@ -72,5 +78,12 @@ app.use(session({
 //******* for different routes
 app.use('/',routes);
 
+// configure socket.io
+const io = socket(server);
+
+//** Chat Text
+require('./controllers/chatController')(io);
+
+
 //********
-app.listen(port,()=>console.log('server running on http://localhost:'+port));
+server.listen(port,()=>console.log('server running on http://localhost:'+port));

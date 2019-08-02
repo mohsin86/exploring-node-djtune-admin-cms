@@ -16399,3 +16399,15 @@ body {
   background-position: right calc(0.375em + 0.1875rem) center;
 }
 /*# sourceMappingURL=style.css.map */
+#chat-area{
+  height: 50%;
+  overflow: scroll;
+  width: 237px;
+  display: block;
+}
+.message{
+  display: block;
+  width: 100%;
+  float: left;
+  margin-bottom: 10px;
+}

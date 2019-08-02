@@ -5,6 +5,10 @@ const path = require('path');
 
 var data = {};
 
+
+
+
+
 var index = async (req, res, next) =>{
     session = req.session;
     data.logInuserInfo = session.user;

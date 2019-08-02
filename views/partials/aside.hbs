@@ -1,15 +1,16 @@
 <aside class="aside-menu">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">
-                <i class="icon-list"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#messages" role="tab">
+            <a class="nav-link active" data-toggle="tab" href="#messages" role="tab">
                 <i class="icon-speech"></i>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link " data-toggle="tab" href="#timeline" role="tab">
+                <i class="icon-list"></i>
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
                 <i class="icon-settings"></i>
@@ -18,7 +19,40 @@
     </ul>
     <!-- Tab panes-->
     <div class="tab-content">
-        <div class="tab-pane active" id="timeline" role="tabpanel">
+        <div class="tab-pane  active" id="messages" role="tabpanel">
+            <div class="chat-area" id="chat-area" style="height: 50%; overflow: scroll;">
+                <!--
+                <div class="message">
+                    <div class="py-3 pb-5 mr-3 float-left">
+                        <div class="avatar">
+                            <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
+                            <span class="avatar-status badge-success"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="text-muted font-weight-bold">Lukasz Holeczek</small>
+                        <small class="text-muted float-right mt-1">1:52 PM</small>
+                    </div>
+                    <small class="text-muted"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+                </div>
+                <hr>
+                -->
+
+            </div>
+            <div class="input-area" style="position: relative; width: 100%; ">
+                <div class="input-messages" style="position: fixed ;z-index: 99999;bottom: 0;width: 237px;">
+                    <form id="chatForm">
+                        <div class="form-group">
+                            <input type="text"  id="txt"  class="form-control" value="" placeholder="Write Here...." />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="" class="btn btn-success">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane p-3" id="timeline" role="tabpanel">
             <div class="list-group list-group-accent">
                 <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Today</div>
                 <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
@@ -112,82 +146,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="tab-pane p-3" id="messages" role="tabpanel">
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
             </div>
         </div>
         <div class="tab-pane p-3" id="settings" role="tabpanel">
