@@ -26,7 +26,7 @@ $(document).ready(function() {
                         </div>
                         <small class="text-muted"> ${data.message}</small>
                     </div>
-                    <hr/>`);
+                    <hr>`);
         }
     });
 });
