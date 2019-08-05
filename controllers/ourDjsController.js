@@ -5,10 +5,6 @@ const path = require('path');
 
 var data = {};
 
-
-
-
-
 var index = async (req, res, next) =>{
     session = req.session;
     data.logInuserInfo = session.user;
@@ -75,7 +71,7 @@ createArtist = async (req,res)=>{
         }
     }catch (e) {
         data.djs = djs;
-        //conveting array to object for better controll on view template
+        //converting array to object for better control on view template
         let errData = e.array().reduce(function(TmpObject, item) {
             index  = item.param ;
             TmpObject[index] = item;
@@ -89,8 +85,8 @@ createArtist = async (req,res)=>{
 }
 
 var validate = (method)=>{
-    switch (method) {
-        case 'validateReques': {
+    if (method === 'validateReques') {
+        {
             return [
                 check('name').not().isEmpty().withMessage('Name is required'),
                 //check('photo').not().isEmpty().withMessage('Photo is required'),

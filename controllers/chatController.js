@@ -1,7 +1,7 @@
 
 // define constructor function that gets `io` send to it
 module.exports = function(io) {
-    io.on('connection', function(socket) {
+    io.on('connection', function(socket){
         console.log('a user connected');
 
         socket.on('disconnect', function(){
