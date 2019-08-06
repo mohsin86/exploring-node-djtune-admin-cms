@@ -9,7 +9,7 @@ var index = async (req, res, next) =>{
     session = req.session;
     data.logInuserInfo = session.user;
     data.djLists = await djsModule.find();
-    console.log(data.djLists);
+   // console.log(data.djLists);
     if(data.djLists){
         res.render("ourDjs/djList",{data:data} );
     }
@@ -28,7 +28,12 @@ createArtist = async (req,res)=>{
     djs.designation = req.body.designation;
     djs.shortBio = req.body.shortBio;
     djs.longBio = req.body.longBio;
-    djs.featuredDj = req.body.featuredDj;
+    if(req.body.featured){
+        djs.featuredDj =  true;
+    }else{
+        djs.featuredDj = false;
+    }
+
     djs.status = req.body.status;
     let fblink = req.body.fblink;
     let featuredVideoLink = req.body.featuredVideoLink;
@@ -83,7 +88,16 @@ createArtist = async (req,res)=>{
 
 
 }
-
+getdjs = async (req,res)=>{
+    let id = req.params.id;
+    let userDAta = await djsModule.findById(id);
+    if(userDAta){
+        res.send(userDAta);
+    }
+}
+updateDjs = async (req,res)=>{
+    console.log(req.body);
+}
 var validate = (method)=>{
     if (method === 'validateReques') {
         {
@@ -107,5 +121,7 @@ module.exports = {
     index:index,
     djsAddPage:djsAddPage,
     create:createArtist,
-    validate:validate
+    validate:validate,
+    getdjs:getdjs,
+    updateDjs:updateDjs
 };

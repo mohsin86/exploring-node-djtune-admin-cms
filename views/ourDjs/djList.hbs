@@ -37,10 +37,8 @@
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> Our Djs
                         <a href="{{SITE_URL}}/add-djs" class="btn btn-info fl" type="button">Add Djs</a>
-
                     </div>
                     <div class="card-body">
-
                         <table class="table table-responsive-sm table-bordered">
                             <thead>
                             <tr>
@@ -52,7 +50,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             {{#each data.djLists}}
                                 <tr>
                                     <td>1</td>
@@ -65,11 +62,13 @@
                                             <span class="badge badge-danger">disable</span>
                                         {{/if}}
                                     </td>
-                                    <td><button class="btn btn-primary mb-1" id="our-djs-edit" type="button" data-toggle="modal" data-target="#primaryModal">Edit</button>
+                                    <td>
+                                        <input type="hidden" value="{{_id}}" name="djsid" class="djsid" />
+<!--                                        data-toggle="modal" data-target="#primaryModal"-->
+                                        <a class="btn btn-primary mb-1 our-djs-edit" >Edit</a>
                                          <a class="btn btn-danger mb-1" href="#">del</a></td>
                                 </tr>
                             {{/each}}
-
                             </tbody>
                         </table>
                     </div>
@@ -79,8 +78,9 @@
 
     </main>
     <!-- /.modal-->
-    <div class="modal fade" id="primaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="djsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px;">
+            <form id="update-djs" action="" method="post" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Modal title</h4>
@@ -89,7 +89,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="http://localhost:3000/creat-djs" method="post" enctype="multipart/form-data">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -99,7 +99,7 @@
                                                                 <i class="icon-user"></i>
                                                             </span>
                                         </div>
-                                        <input class="form-control " name="name" value="" type="text" placeholder="Name">
+                                        <input class="form-control " name="name" value="" type="text" id="djsName" placeholder="Name">
 
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                                                             <i class="icon-user"></i>
                                                         </span>
                                         </div>
-                                        <input class="form-control" name="designation" type="text" value="" placeholder="Designation">
+                                        <input class="form-control" id="designation" name="designation" type="text" value=""  placeholder="Designation">
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                                                 <i class="fa fa-facebook fa-lg"></i>
                                             </span>
                                 </div>
-                                <input class="form-control" name="fblink" type="text" placeholder="facebook link" value="">
+                                <input class="form-control" id="fblink" name="fblink" type="text" placeholder="facebook link" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -146,7 +146,7 @@
                                                 <i class="fa fa-youtube"></i>
                                             </span>
                                 </div>
-                                <input class="form-control" name="youtubeLink" type="text" placeholder="Youtube link" value="">
+                                <input class="form-control" id="youtubeLink" name="youtubeLink" type="text" placeholder="Youtube link" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -156,14 +156,14 @@
                                                 <i class="fa fa-heart fa-lg"></i>
                                             </span>
                                 </div>
-                                <input class="form-control" name="featuredVideoLink" type="text" placeholder="Featured Video link" value="">
+                                <input class="form-control" id="featuredVideoLink" name="featuredVideoLink" type="text" placeholder="Featured Video link" value="">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label">Featured Djs</label>
                             <div class="col-md-9 col-form-label">
                                 <div class="form-check form-check-inline mr-1">
-                                    <input class="form-check-input" id="inline-checkbox1" type="checkbox" value="check1">
+                                    <input class="form-check-input"  id="featured" type="checkbox" value="featured">
                                     <label class="form-check-label" for="inline-checkbox1">Featured</label>
                                 </div>
                             </div>
@@ -172,18 +172,20 @@
                             <label class="col-md-3 col-form-label" for="image">Image</label>
                             <div class="col-md-9 ">
                                 <input class="" id="file-input" type="file" accept="image/*" name="photo">
+                                <img src="" id="artist-photo" width="100">
                             </div>
 
 
                         </div>
                         <input class="btn btn-block btn-success" type="submit" value="Create Artist">
-                    </form>
+
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="button">Save changes</button>
+                    <input class="btn btn-primary" id="saveChanges" type="submit" value="Save changes"/>
                 </div>
             </div>
+            </form>
             <!-- /.modal-content-->
         </div>
         <!-- /.modal-dialog-->
