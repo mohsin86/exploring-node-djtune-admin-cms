@@ -18,6 +18,7 @@ jQuery(document).ready(function() {
                 jQuery('#designation').val(designation);
                 jQuery('#shortBio').val(shortBio);
                 jQuery('#longBio').val(longBio);
+                jQuery('#selectedId').val(id);
                 jQuery('#artist-photo').attr('src',photo);
                 social.forEach((data)=>{
                     jQuery('#'+data.name).val(data.link);
@@ -38,7 +39,23 @@ jQuery(document).ready(function() {
     jQuery('#saveChanges').click(function (e) {
         e.preventDefault();
         var data = jQuery('#update-djs').serialize();
-        console.log(data);
+        // var form = document.getElementById('update-djs');
+        // var formData = new FormData(form);
+        // var fileInput = document.getElementById('file-input');
+        // var file = fileInput.files[0];
+        // formData.append('file', file);
+        // console.log(data);
+        var id = jQuery('#selectedId').val();
+        jQuery.ajax({
+            url: '/djs/'+id,
+            method: 'put',
+
+          // data:JSON.stringify(formData)
+            data:data
+        })
+            .then(function(data) {
+                    console.log(data);
+            });
 
     });
 

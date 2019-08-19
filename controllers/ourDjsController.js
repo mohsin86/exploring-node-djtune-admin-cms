@@ -84,10 +84,8 @@ createArtist = async (req,res)=>{
         }, {}) //watch out the empty {}, which is passed as "result"
         res.render("ourDjs/djs-add-page",{data:data,errors:errData} );
     }
-
-
-
 }
+
 getdjs = async (req,res)=>{
     let id = req.params.id;
     let userDAta = await djsModule.findById(id);
@@ -95,7 +93,44 @@ getdjs = async (req,res)=>{
         res.send(userDAta);
     }
 }
-updateDjs = async (req,res)=>{
+updateDjs = async (req,res,next)=>{
+    // let id = req.params.id;
+    // console.log(req.body);
+    let social ={};
+    let id = req.params.id;
+    let djs = await djsModule.findById(id);
+    djs.name = req.body.name;
+    djs.designation = req.body.designation;
+    djs.shortBio = req.body.shortBio;
+    djs.longBio = req.body.longBio;
+    if(req.body.featured){
+        djs.featuredDj =  true;
+    }else{
+        djs.featuredDj = false;
+    }
+
+    djs.status = req.body.status;
+    djs.social = {};
+
+    let fblink = req.body.fblink;
+    let featuredVideoLink = req.body.featuredVideoLink;
+    let youtubeLink = req.body.youtubeLink;
+    social.name='fblink';
+    social.link= fblink;
+    djs.social.push(social);
+
+    social.name='featuredVideoLink';
+    social.link= featuredVideoLink;
+    djs.social.push(social);
+
+    social.name='youtubeLink';
+    social.link= youtubeLink;
+
+    djs.social.push(social);
+    console.log(djs);
+    // need a way to upload file
+}
+deleteDjs = (req,res)=>{
     console.log(req.body);
 }
 var validate = (method)=>{
@@ -123,5 +158,6 @@ module.exports = {
     create:createArtist,
     validate:validate,
     getdjs:getdjs,
-    updateDjs:updateDjs
+    updateDjs:updateDjs,
+    deleteDjs
 };
