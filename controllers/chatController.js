@@ -13,6 +13,9 @@ module.exports = function(io) {
             //io.sockets.emit('new message', {message: message});
             io.sockets.emit('new message', {message: message});
         });
+
+      
+
     });
 };
 
