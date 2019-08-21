@@ -37,10 +37,8 @@
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> Our Djs
                         <a href="{{SITE_URL}}/add-djs" class="btn btn-info fl" type="button">Add Djs</a>
-
                     </div>
                     <div class="card-body">
-
                         <table class="table table-responsive-sm table-bordered">
                             <thead>
                             <tr>
@@ -52,7 +50,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             {{#each data.djLists}}
                                 <tr>
                                     <td>1</td>
@@ -65,10 +62,13 @@
                                             <span class="badge badge-danger">disable</span>
                                         {{/if}}
                                     </td>
-                                    <td><a href="#">Edit</a> <a href="#">del</a></td>
+                                    <td>
+                                        <input type="hidden" value="{{_id}}" name="djsid" class="djsid" />
+<!--                                        data-toggle="modal" data-target="#primaryModal"-->
+                                        <a class="btn btn-primary mb-1 our-djs-edit" >Edit</a>
+                                         <a class="btn btn-danger mb-1" href="#">del</a></td>
                                 </tr>
                             {{/each}}
-
                             </tbody>
                         </table>
                     </div>
@@ -77,7 +77,121 @@
         </div>
 
     </main>
+    <!-- /.modal-->
+    <div class="modal fade" id="djsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px;">
+            <form id="update-djs" action="" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal title</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="icon-user"></i>
+                                                            </span>
+                                        </div>
+                                        <input class="form-control " name="name" value="" type="text" id="djsName" placeholder="Name">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon-user"></i>
+                                                        </span>
+                                        </div>
+                                        <input class="form-control" id="designation" name="designation" type="text" value=""  placeholder="Designation">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="shortBio">Short Bio</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="shortBio" name="shortBio" rows="2" placeholder="Short Bio"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="longBio">Long Bio</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="longBio" name="longBio" rows="3" placeholder="Short Bio"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-facebook fa-lg"></i>
+                                            </span>
+                                </div>
+                                <input class="form-control" id="fblink" name="fblink" type="text" placeholder="facebook link" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-youtube"></i>
+                                            </span>
+                                </div>
+                                <input class="form-control" id="youtubeLink" name="youtubeLink" type="text" placeholder="Youtube link" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-heart fa-lg"></i>
+                                            </span>
+                                </div>
+                                <input class="form-control" id="featuredVideoLink" name="featuredVideoLink" type="text" placeholder="Featured Video link" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Featured Djs</label>
+                            <div class="col-md-9 col-form-label">
+                                <div class="form-check form-check-inline mr-1">
+                                    <input class="form-check-input"  id="featured" type="checkbox" value="featured">
+                                    <label class="form-check-label" for="inline-checkbox1">Featured</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="image">Image</label>
+                            <div class="col-md-9 ">
+                                <input class="" id="file-input" type="file" accept="image/*" name="photo">
+                                <img src="" id="artist-photo" width="100">
+                            </div>
+
+
+                        </div>
+                        <input class="btn btn-block btn-success" type="submit" value="Create Artist">
+
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="selectedId" value="" name="selectedId" />
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <input class="btn btn-primary" id="saveChanges" type="submit" value="Save changes"/>
+                </div>
+            </div>
+            </form>
+            <!-- /.modal-content-->
+        </div>
+        <!-- /.modal-dialog-->
+    </div>
+    <!-- /.modal-->
     {{> aside }}
 
 </div>

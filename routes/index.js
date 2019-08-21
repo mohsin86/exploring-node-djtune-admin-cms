@@ -67,9 +67,11 @@ routers.get('/settings',isLoggedIn, settingsController);
 /*
  * Djs or Artist List
  */
-routers.get('/our-djs',isLoggedIn, ourDjsController.index);
+routers.get('/djs',isLoggedIn, ourDjsController.index);
 routers.get('/add-djs',isLoggedIn, ourDjsController.djsAddPage);
 routers.post('/creat-djs',[ourDjsController.validate('validateReques')], ourDjsController.create);
+routers.route('/djs/:id',isLoggedIn).get(ourDjsController.getdjs).put(ourDjsController.updateDjs).delete(ourDjsController.deleteDjs);
+        ;
 //routers.post('/creat-djs', ourDjsController.create);
 
 //The 404 Route (ALWAYS Keep this as the last route)

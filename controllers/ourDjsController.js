@@ -5,15 +5,11 @@ const path = require('path');
 
 var data = {};
 
-
-
-
-
 var index = async (req, res, next) =>{
     session = req.session;
     data.logInuserInfo = session.user;
     data.djLists = await djsModule.find();
-    console.log(data.djLists);
+   // console.log(data.djLists);
     if(data.djLists){
         res.render("ourDjs/djList",{data:data} );
     }
@@ -32,7 +28,12 @@ createArtist = async (req,res)=>{
     djs.designation = req.body.designation;
     djs.shortBio = req.body.shortBio;
     djs.longBio = req.body.longBio;
-    djs.featuredDj = req.body.featuredDj;
+    if(req.body.featured){
+        djs.featuredDj =  true;
+    }else{
+        djs.featuredDj = false;
+    }
+
     djs.status = req.body.status;
     let fblink = req.body.fblink;
     let featuredVideoLink = req.body.featuredVideoLink;
@@ -75,7 +76,7 @@ createArtist = async (req,res)=>{
         }
     }catch (e) {
         data.djs = djs;
-        //conveting array to object for better controll on view template
+        //converting array to object for better control on view template
         let errData = e.array().reduce(function(TmpObject, item) {
             index  = item.param ;
             TmpObject[index] = item;
@@ -83,14 +84,58 @@ createArtist = async (req,res)=>{
         }, {}) //watch out the empty {}, which is passed as "result"
         res.render("ourDjs/djs-add-page",{data:data,errors:errData} );
     }
-
-
-
 }
 
+getdjs = async (req,res)=>{
+    let id = req.params.id;
+    let userDAta = await djsModule.findById(id);
+    if(userDAta){
+        res.send(userDAta);
+    }
+}
+updateDjs = async (req,res,next)=>{
+    // let id = req.params.id;
+    // console.log(req.body);
+    let social ={};
+    let id = req.params.id;
+    let djs = await djsModule.findById(id);
+    djs.name = req.body.name;
+    djs.designation = req.body.designation;
+    djs.shortBio = req.body.shortBio;
+    djs.longBio = req.body.longBio;
+    if(req.body.featured){
+        djs.featuredDj =  true;
+    }else{
+        djs.featuredDj = false;
+    }
+
+    djs.status = req.body.status;
+    djs.social = {};
+
+    let fblink = req.body.fblink;
+    let featuredVideoLink = req.body.featuredVideoLink;
+    let youtubeLink = req.body.youtubeLink;
+    social.name='fblink';
+    social.link= fblink;
+    djs.social.push(social);
+
+    social.name='featuredVideoLink';
+    social.link= featuredVideoLink;
+    djs.social.push(social);
+
+    social.name='youtubeLink';
+    social.link= youtubeLink;
+
+    djs.social.push(social);
+    console.log(djs);
+    // need a way to upload file
+}
+deleteDjs = (req,res)=>{
+    console.log(req.body);
+}
 var validate = (method)=>{
-    switch (method) {
-        case 'validateReques': {
+    if (method === 'validateReques') {
+        {
             return [
                 check('name').not().isEmpty().withMessage('Name is required'),
                 //check('photo').not().isEmpty().withMessage('Photo is required'),
@@ -111,5 +156,8 @@ module.exports = {
     index:index,
     djsAddPage:djsAddPage,
     create:createArtist,
-    validate:validate
+    validate:validate,
+    getdjs:getdjs,
+    updateDjs:updateDjs,
+    deleteDjs
 };

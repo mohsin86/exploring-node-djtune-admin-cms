@@ -1,11 +1,11 @@
 const common = require('./commonController');
-var data = {};
+const data = {};
 
-var home = (req, res, next) =>{
-    session = req.session;
+const home = (req, res, next) => {
+    let session = req.session;
     data.logInuserInfo = session.user;
-    res.render("home",{SITE_URL:global.SITE_URL,data:data} );
-}
+    res.render("home", {data: data});
+};
 
 
 module.exports = home;

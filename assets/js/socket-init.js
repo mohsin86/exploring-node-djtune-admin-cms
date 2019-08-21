@@ -26,9 +26,14 @@ $(document).ready(function() {
                         </div>
                         <small class="text-muted"> ${data.message}</small>
                     </div>
-                    <hr/>`);
+                    <hr>`);
+            var container = document.getElementById("chat-area");
+            container.scrollTop = container.scrollHeight;
         }
     });
+
+    $('#chat-area').animate({
+        scrollTop: $('#chat-area')[0].scrollHeight}, "slow");
 });
 
 //
