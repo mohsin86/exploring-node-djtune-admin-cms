@@ -1,4 +1,5 @@
 // https://github.com/aurasphere/mongodb-university-classes/blob/master/M121%20-%20The%20MongoDB%20Aggregation%20Framework/Chapter%201%20-%20Basic%20Aggregation%20-%20%24match%20and%20%24project/Optional%20Lab%20-%20Expressions%20with%20%24project/Optional%20Lab%20Solution.js
+
 function getRecord() {
     var pipeline = [
         {
@@ -138,8 +139,7 @@ function getRecord() {
                 "countries": { $in: ["USA"] },
                 "cast" : { $exists : true }
             }
-        },
-        {
+        },{
             $project:{
                 _id:0,
                 title:1,
@@ -156,13 +156,11 @@ function getRecord() {
             $addFields:{
                 num_favs: {$setIntersection:["$cast","$favorites"]}
             }
-        },
-        {
+        },{
             $match:{
                 num_favs:{$elemMatch:{$exists:true}}
             }
-        },
-        {
+        },{
             $project:{
                 title:1,
                 ratings: 1,
@@ -170,13 +168,39 @@ function getRecord() {
                 favorites:1,
                 num_favs:{$size: "$num_favs"}
             }
-        },
-        {
+        },{
             $sort: {num_favs:-1, "ratings":-1, title:-1}
-        },
-        {
+        },{
             $limit:25
         }
     ]).pretty()
+
+    /*
+    Chapter 2: Basic Aggregation - Utility Stages
+Lab - Bringing it all together
+     */
+
+    db.movies.aggregate([
+        {
+            $match:{
+                "languages" : "English",
+                "imdb.rating":{$gte:1},
+                "imdb.votes":{$gte:1},
+                year: {$gte:1990},
+
+            }
+        },{
+            $project:{
+                title:1,
+                year:1,
+                "imdb.rating":1,
+                "imdb.votes":1,
+                avgRating: {$avg:"$imdb.votes"}
+            }
+        }
+    ]);
+
+    
+
 
 }
