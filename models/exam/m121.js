@@ -1,5 +1,5 @@
 // https://github.com/aurasphere/mongodb-university-classes/blob/master/M121%20-%20The%20MongoDB%20Aggregation%20Framework/Chapter%201%20-%20Basic%20Aggregation%20-%20%24match%20and%20%24project/Optional%20Lab%20-%20Expressions%20with%20%24project/Optional%20Lab%20Solution.js
-function getRecord() {
+
     var pipeline = [
         {
             $match: {
@@ -315,7 +315,29 @@ Lab - Bringing it all together
             $sort:{"_id.directorsCond":-1}
         }
     ]);
+//Lab - Using $lookup
 
 
+db.air_alliances.aggregate([
+    {
+        $unwind: "$airlines"
+    },
+    {
+        $lookup:{
+            from: "air_routes",
+            localField: "airlines",
+            foreignField: "airline.name",
+            as: 'AirlinesRoute',
+        }
+    },
+    { $unwind : "$AirlinesRoute" },
+    { $match : { "AirlinesRoute.airplane" : { $in : [ "747", "380" ] } } },
+    { $group : {
+            "_id" : "$name",
+            "routes_count" : { $sum : 1 }
+        }
+    },
+    { $sort : {"routes_count" : -1 } }
+]).pretty()
 
-}
+
