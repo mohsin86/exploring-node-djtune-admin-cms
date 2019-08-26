@@ -200,7 +200,81 @@ Lab - Bringing it all together
         }
     ]);
 
-    
+    // Lab - $group and Accumulators
+    db.movies.aggregate([
+        {
+            $match:{
+                awards: { $exists:true }
+            }
+        },{
+            $project:{
+                _id:0,
+                title:1,
+                award_array:{
+                    $split:["$awards",' ']
+                }
+            }
+        }
+    ]).pretty()
 
+// Lab - $group and Accumulators
+    db.movies.aggregate([
+        {
+            $match:{
+                awards: { $regex: /Won \d+ Oscar/  },
+                "imdb.rating": {$exists:true}
 
+            }
+        },{
+            $project:{
+                _id:0,
+                title:1,
+                awards:1,
+                "imdb.rating":1,
+
+            }
+        },{
+            $group:{
+                _id: null,
+                count: {$sum:1},
+                highestRatings: {$max:"$imdb.rating"},
+                lowestRatings: {$min:"$imdb.rating"},
+                avgRating: {$avg:"$imdb.rating"},
+                ageStdDev: { $stdDevSamp: "$imdb.rating" }
+            }
+        }
+    ]).pretty()
+
+// Lab - $unwind
+    db.movies.aggregate([
+        {
+            $match:{
+                languages:{$all:['English']},
+                cast : { $exists:true },
+                "imdb.rating": {$exists:true}
+            }
+        },{
+            $project:{
+                _id:0,
+                languages:1,
+                title:1,
+                cast:1,
+                castSize:{$size: "$cast"},
+                ratings:"$imdb.rating",
+            }
+        },{
+            $unwind:"$cast"
+        },{
+            $group: {
+                _id:"$cast",
+                Number_of_movies: { $sum:1 },
+                ratings_avg:{  $avg:"$ratings"}
+            },
+        },{
+            $sort: {Number_of_movies:-1}
+        },{
+            $limit: 1
+        }
+    ]).pretty()
+// ratings:{ $trunc :[{ $avg:"$ratings" },1]}
 }
