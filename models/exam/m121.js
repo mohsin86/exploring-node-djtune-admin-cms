@@ -179,4 +179,24 @@ function getRecord() {
         }
     ]).pretty()
 
+    // Group
+
+    db.movies.aggregate([
+        {
+            $group:{
+                _id:{
+                    directorsCond:{
+                     $cond:[{$isArray:"$directors"},{$size:"$directors"},0]
+                    }
+                },
+                num_of_filem:{$sum:1}
+            }
+        },
+        {
+            $sort:{"_id.directorsCond":-1}
+        }
+    ]);
+
+
+
 }
