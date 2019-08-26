@@ -186,6 +186,125 @@ function getRecord() {
             $group:{
                 _id:{
                     directorsCond:{
+                        $cond:[{$isArray:"$directors"},{$size:"$directors"},0]
+                    }
+                },
+                num_of_filem:{$sum:1}
+            }
+        },
+        {
+            $sort:{"_id.directorsCond":-1}
+        }
+    ]);
+    /*
+    Chapter 2: Basic Aggregation - Utility Stages
+Lab - Bringing it all together
+     */
+
+    db.movies.aggregate([
+        {
+            $match:{
+                "languages" : "English",
+                "imdb.rating":{$gte:1},
+                "imdb.votes":{$gte:1},
+                year: {$gte:1990},
+
+            }
+        },{
+            $project:{
+                title:1,
+                year:1,
+                "imdb.rating":1,
+                "imdb.votes":1,
+                avgRating: {$avg:"$imdb.votes"}
+            }
+        }
+    ]);
+
+    // Lab - $group and Accumulators
+    db.movies.aggregate([
+        {
+            $match:{
+                awards: { $exists:true }
+            }
+        },{
+            $project:{
+                _id:0,
+                title:1,
+                award_array:{
+                    $split:["$awards",' ']
+                }
+            }
+        }
+    ]).pretty()
+
+// Lab - $group and Accumulators
+    db.movies.aggregate([
+        {
+            $match:{
+                awards: { $regex: /Won \d+ Oscar/  },
+                "imdb.rating": {$exists:true}
+
+            }
+        },{
+            $project:{
+                _id:0,
+                title:1,
+                awards:1,
+                "imdb.rating":1,
+
+            }
+        },{
+            $group:{
+                _id: null,
+                count: {$sum:1},
+                highestRatings: {$max:"$imdb.rating"},
+                lowestRatings: {$min:"$imdb.rating"},
+                avgRating: {$avg:"$imdb.rating"},
+                ageStdDev: { $stdDevSamp: "$imdb.rating" }
+            }
+        }
+    ]).pretty()
+
+// Lab - $unwind
+    db.movies.aggregate([
+        {
+            $match:{
+                languages:{$all:['English']},
+                cast : { $exists:true },
+                "imdb.rating": {$exists:true}
+            }
+        },{
+            $project:{
+                _id:0,
+                languages:1,
+                title:1,
+                cast:1,
+                castSize:{$size: "$cast"},
+                ratings:"$imdb.rating",
+            }
+        },{
+            $unwind:"$cast"
+        },{
+            $group: {
+                _id:"$cast",
+                Number_of_movies: { $sum:1 },
+                ratings_avg:{  $avg:"$ratings"}
+            },
+        },{
+            $sort: {Number_of_movies:-1}
+        },{
+            $limit: 1
+        }
+    ]).pretty()
+// ratings:{ $trunc :[{ $avg:"$ratings" },1]}
+    // Group
+
+    db.movies.aggregate([
+        {
+            $group:{
+                _id:{
+                    directorsCond:{
                      $cond:[{$isArray:"$directors"},{$size:"$directors"},0]
                     }
                 },
