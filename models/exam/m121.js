@@ -139,7 +139,8 @@ function getRecord() {
                 "countries": { $in: ["USA"] },
                 "cast" : { $exists : true }
             }
-        },{
+        },
+        {
             $project:{
                 _id:0,
                 title:1,
@@ -156,11 +157,13 @@ function getRecord() {
             $addFields:{
                 num_favs: {$setIntersection:["$cast","$favorites"]}
             }
-        },{
+        },
+        {
             $match:{
                 num_favs:{$elemMatch:{$exists:true}}
             }
-        },{
+        },
+        {
             $project:{
                 title:1,
                 ratings: 1,
@@ -168,13 +171,32 @@ function getRecord() {
                 favorites:1,
                 num_favs:{$size: "$num_favs"}
             }
-        },{
+        },
+        {
             $sort: {num_favs:-1, "ratings":-1, title:-1}
-        },{
+        },
+        {
             $limit:25
         }
     ]).pretty()
 
+    // Group
+
+    db.movies.aggregate([
+        {
+            $group:{
+                _id:{
+                    directorsCond:{
+                        $cond:[{$isArray:"$directors"},{$size:"$directors"},0]
+                    }
+                },
+                num_of_filem:{$sum:1}
+            }
+        },
+        {
+            $sort:{"_id.directorsCond":-1}
+        }
+    ]);
     /*
     Chapter 2: Basic Aggregation - Utility Stages
 Lab - Bringing it all together
