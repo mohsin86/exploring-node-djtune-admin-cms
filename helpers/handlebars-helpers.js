@@ -1,5 +1,6 @@
 let sitPort = process.env.PORT || 8000;
-const SITE_URL= "http://localhost:"+sitPort;
+//const SITE_URL= "http://localhost:"+sitPort;
+const SITE_URL= "https://butler-nde.herokuapp.com/";
 var register = function(Handlebars) {
     var helpers = {
         inc: function(value, options) {
