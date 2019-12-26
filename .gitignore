@@ -6,3 +6,6 @@ node_modules/
 
 #upload Directory
 /assets/uploads/
+
+#exclude static template
+admin-static template/

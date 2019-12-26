@@ -299,7 +299,7 @@ Lab - Bringing it all together
 // Lab: $graphLookup
     var result = db.air_alliances.aggregate([{
         $match: { name: "OneWorld" }
-    }, {
+    },{
         $graphLookup: {
             startWith: "$airlines",
             from: "air_airlines",
@@ -311,7 +311,7 @@ Lab - Bringing it all together
                 country: { $in: ["Germany", "Spain", "Canada"] }
             }
         }
-    }, {
+    },{
         $graphLookup: {
             startWith: "$airlines.base",
             from: "air_routes",
@@ -326,16 +326,82 @@ Lab - Bringing it all together
             "connections.dst_airport": 1,
             "connections.airline.name": 1
         }
-    },
-        { $unwind: "$connections" },
-        {
+    },{ $unwind: "$connections" },{
             $project: {
                 isValid: { $in: ["$connections.airline.name", "$validAirlines"] },
                 "connections.dst_airport": 1
             }
-        },
-        { $match: { isValid: true } },
-        { $group: { _id: "$connections.dst_airport" } }
+    },{ $match: { isValid: true } },
+    { $group: { _id: "$connections.dst_airport" } }
     ]);
+
+// max rating
+    db.movies.aggregate([
+        {
+            $match:{
+                "imdb.rating":{$exists:true}
+            }
+        },{
+            $project:{
+                _id:0,
+                title:1,
+                "imdb.rating":1
+            }
+        },
+        {
+            $group:{
+                _id : "$imdb.rating",
+                max:{$max:"$imdb.rating"}
+            }
+        },{ $sort: { max: -1} },
+    ]);
+
+
+//    Lab - $facets
+  db.movies.aggregate([
+      {
+          $match:{
+              "imdb.rating" : { $gt : 0 },
+              "metacritic" : { $gt : 0 }
+          }
+      },{
+        $facet:{
+            "imdbRating":[
+                {$sort:{"imdb.rating":-1}},
+                {$limit:10},
+                {
+                    $project:{
+                        _id:0,
+                        title:1,
+                        "imdb.rating":1,
+                        metacritic:1
+                    }
+                }
+            ],
+            "AsMataccirtic":[
+                {$sort:{"metacritic":-1}},
+                {$limit:10},
+                {
+                    $project:{
+                        _id:0,
+                        title:1,
+                        "imdb.rating":1,
+                        metacritic:1
+                    }
+                }
+            ],
+
+        }
+      },
+      {
+          $project:{
+              imdbRating:1,
+              AsMataccirtic:1,
+              "sizeOfimdb":{$size:"$imdbRating"},
+              "sizeOfimdb":{$size:"$AsMataccirtic"},
+              commonToBoth: { $setIntersection: [ "$imdbRating", "$AsMataccirtic" ] },
+          }
+      }
+  ]).pretty();
 
 }
