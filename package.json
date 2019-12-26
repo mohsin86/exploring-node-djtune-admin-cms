@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "NODE_ENV=developmnet SKIP_LOGIN=true node app.js",
     "start-no-login": "NODE_ENV=developmnet PORT=3000 SKIP_LOGIN=true nodemon app.js --watch controllers models routes views  partials user helpers"
   },
   "author": "",
