@@ -20,5 +20,5 @@ $ npm install
 $ npm start
 ~~~~
 ## Admin Login
-`User: admin
+`User: mohsin
 pass: 123456`
