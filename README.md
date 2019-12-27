@@ -18,4 +18,7 @@ To run this project, install it locally using npm:
 $ cd ../lorem
 $ npm install
 $ npm start
-
+~~~~
+## Admin Login
+`User: admin
+pass: 123456`
