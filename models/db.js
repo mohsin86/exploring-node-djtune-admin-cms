@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 //const mongodb = process.env.MONGODB_URI || 'mongodb://localhost:27017/djtune' ;
-const mongodb = process.env.MONGODB_URI || 'mongodb+srv://mohsin-heroku:623468mM@mflix-jy5zg.mongodb.net/djtuneHeroku?retryWrites=true&w=majority' ;
+const mongodb = process.env.MONGODB_URI || '' ;
 
 mongoose.connect(mongodb, {useNewUrlParser: true});
 
