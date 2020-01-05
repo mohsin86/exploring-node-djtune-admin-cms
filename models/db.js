@@ -6,9 +6,10 @@ mongoose.connect(mongodb, {useNewUrlParser: true});
 
 var db = mongoose.connection;
 
+// checks if connection with the database is successful
 db.once('open', () => console.log('connected to the database'));
 
-// checks if connection with the database is successful
+// for failure connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 mongoose.set('useFindAndModify', false);
