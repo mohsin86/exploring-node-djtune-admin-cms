@@ -5,10 +5,11 @@ const mongodb = process.env.MONGODB_URI || '' ;
 mongoose.connect(mongodb, {useNewUrlParser: true});
 
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    // we're connected!
-});
+
+db.once('open', () => console.log('connected to the database'));
+
+// checks if connection with the database is successful
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 mongoose.set('useFindAndModify', false);
 
